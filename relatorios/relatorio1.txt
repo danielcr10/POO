@@ -2,7 +2,7 @@ Controle de versionamento: Git/GitHub Privado
 
 Formas de comunicação entre os integrantes: Canal no Slack, Whatsapp e presencial.
 
-Tarefas a serem cumpridas para a 2 interação:
+Tarefas a serem cumpridas para a 2 iteração:
 1. Adquirir as imagens necessárias (Tabuleiro e Peças).
 2. Fazer um diagrama de classes que abranja a interface gráfica para a apresentação do tabuleiro e das peças.
 3. Fazer um diagrama de classes que abranja as classes do jogo.
