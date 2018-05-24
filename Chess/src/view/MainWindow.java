@@ -36,10 +36,10 @@ class BoardPanel extends JPanel {
 		final double squareHeight = (boardFrameImage.getHeight(null) - 2 * boardFrameSize) / dimension;
 		
 		for(int i = 0; i < dimension; i++) {
-			for(int j = 0; j < dimension; j++) {
-				double x = boardFrameSize + j * squareWidth;
-				double y = boardFrameSize + i * squareHeight;
-				g.draw(new Rectangle2D.Double(x, y, squareWidth, squareHeight));
+			for(int j = i % 2; j < dimension; j += 2) {
+				final double x = boardFrameSize + j * squareWidth;
+				final double y = boardFrameSize + i * squareHeight;
+				g.fill(new Rectangle2D.Double(x, y, squareWidth, squareHeight));
 			}
 		}
 	}
