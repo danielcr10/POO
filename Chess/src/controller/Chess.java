@@ -3,9 +3,9 @@ package controller;
 import javax.swing.SwingUtilities;
 import view.MainWindow;
 
-class Application implements Runnable {
+class Chess implements Runnable {
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Application());
+		SwingUtilities.invokeLater(new Chess());
 	}
 	
 	public void run() {
