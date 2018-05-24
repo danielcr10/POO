@@ -59,8 +59,7 @@ public class MainWindow {
 	public MainWindow() {
 		frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		BoardPanel panel = new BoardPanel();
-		frame.setContentPane(panel);
+		frame.setContentPane(new BoardPanel());
 		adjustSize();
 		frame.setVisible(true);
 	}
