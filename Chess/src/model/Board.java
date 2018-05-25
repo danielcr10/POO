@@ -1,8 +1,10 @@
 package model;
 
+import java.awt.Point;
+
 public class Board {
 	
-	static private final int dimension = 8;
+	static public final int dimension = 8;
 	
 	private Piece[][] pieces = new Piece[dimension][dimension];
 	
@@ -15,6 +17,14 @@ public class Board {
 		pieces[6][5] = new Pawn(Color.BLACK);
 		pieces[6][6] = new Pawn(Color.BLACK);
 		pieces[6][7] = new Pawn(Color.BLACK);
+	}
+	
+	public boolean squareIsVacant(Point position) {
+		return pieces[position.x][position.y] == null;
+	}
+	
+	public Piece getPieceAt(Point position) {
+		return pieces[position.x][position.y];
 	}
 	
 	public String[][] currentState() {

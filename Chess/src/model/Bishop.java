@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Bishop extends Piece {
 
@@ -8,8 +9,12 @@ public class Bishop extends Piece {
 		super(color);
 	}
 	
-	public boolean move(Board domain, Point position) {
-		return true;
+	Point[] movePossibilities(Board domain, Point from) {
+		final ArrayList<Point> possibilitiesList = new ArrayList<>();
+		
+		final Point[] possibilitiesArray = (Point[]) possibilitiesList.toArray();
+		
+		return possibilitiesArray;
 	}
 	
 }

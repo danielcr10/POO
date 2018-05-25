@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.Point;
-
 enum Color {
 	BLACK, WHITE;
 	
@@ -23,7 +21,7 @@ public abstract class Piece {
 		return pieceColor;
 	}
 	
-	abstract public boolean move(Board domain, Point position);
+//	abstract public boolean move(Board domain, Point position);
 	
-//	abstract Point[] movePossibilities();
+	
 }
