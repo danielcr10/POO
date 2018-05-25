@@ -70,7 +70,7 @@ public class BoardView extends JPanel {
 		final Dimension squareDimension = getSquareDimension();
 		
 		for(int i = 0; i < dimension; i++) {
-			for(int j = i % 2; j < dimension; j += 2) {
+			for(int j = (i + 1) % 2; j < dimension; j += 2) {
 				final double x = boardFrameSize + j * squareDimension.getWidth();
 				final double y = boardFrameSize + i * squareDimension.getHeight();
 				g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
