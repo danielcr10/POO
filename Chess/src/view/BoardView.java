@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,6 +7,7 @@ import java.awt.Image;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -16,7 +16,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class BoardView extends JPanel {
 
-	static final String imagesPath = "images/";
+	static final String imagesPath = "images";
+	static final String piecesImagesPath = "pieces";
 	static final double boardFrameSize = 71;
 	static final int dimension = 8;
 	
@@ -24,15 +25,34 @@ public class BoardView extends JPanel {
 	
 	String[][] pieces;
 	
+	HashMap<String, Image> piecesImages;
+	
 	public BoardView(String[][] pieces) {
 		try {
-			boardFrameImage = ImageIO.read(new File(imagesPath + "board.png"));
+			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
 		} catch(IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
+		readPiecesImages();
 		this.pieces = pieces;
+	}
+	
+	private void readPiecesImages() {
+		piecesImages = new HashMap<>();
+		try {
+			final File directory = new File(imagesPath + File.separator + piecesImagesPath);
+			for(File file : directory.listFiles()) {
+				final String filename = file.getName();
+				final String filenameWithoutExtension = filename.substring(0, filename.length() - 4);
+				final Image image = ImageIO.read(file);
+				piecesImages.put(filenameWithoutExtension, image);
+			}
+		} catch(IOException e) {
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
 	}
 	
 	private Dimension getSquareDimension() {
@@ -62,18 +82,12 @@ public class BoardView extends JPanel {
 		final Dimension squareDimension = getSquareDimension();
 		for(int i = 0; i < dimension; i++) {
 			for(int j = 0; j < dimension; j++) {
-				if(pieces[i][j] != "") {
-					Image image;
-					try {
-						image = ImageIO.read(new File(imagesPath + pieces[i][j] + ".png"));
-						System.out.printf("%d, %d\n", squareDimension.width, squareDimension.height);
-						final double x = boardFrameSize + j * squareDimension.getWidth();
-						final double y = boardFrameSize + i * squareDimension.getHeight();
-						g.drawImage(image, (int)x + 3, (int)y - 20, null);
-					} catch(IOException e) {
-						System.out.println(e.getMessage());
-						System.exit(1);
-					}
+				final String pieceType = pieces[i][j];
+				if(pieceType != "") {
+					final Image image = piecesImages.get(pieceType);
+					final double x = boardFrameSize + j * squareDimension.getWidth();
+					final double y = boardFrameSize + i * squareDimension.getHeight();
+					g.drawImage(image, (int)x + 3, (int)y - 20, null);
 				}
 			}
 		}
@@ -83,7 +97,7 @@ public class BoardView extends JPanel {
 		super.paintComponent(g);
 		g.drawImage(boardFrameImage, 0, 0, null);
 		drawBoard((Graphics2D) g);
-		drawPieces((Graphics2D)g);
+		drawPieces(g);
 	}
 	
 }
