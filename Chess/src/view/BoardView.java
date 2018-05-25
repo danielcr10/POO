@@ -80,14 +80,16 @@ public class BoardView extends JPanel {
 	
 	private void drawPieces(Graphics g) {
 		final Dimension squareDimension = getSquareDimension();
+		final int xMargin = 3;
+		final int yMargin = -10;
 		for(int i = 0; i < dimension; i++) {
 			for(int j = 0; j < dimension; j++) {
 				final String pieceType = pieces[i][j];
 				if(pieceType != "") {
 					final Image image = piecesImages.get(pieceType);
 					final double x = boardFrameSize + j * squareDimension.getWidth();
-					final double y = boardFrameSize + i * squareDimension.getHeight();
-					g.drawImage(image, (int)x + 3, (int)y - 20, null);
+					final double y = boardFrameSize + i * squareDimension.getHeight() - (image.getHeight(null) - squareDimension.getHeight());
+					g.drawImage(image, (int)x + xMargin, (int)y + yMargin, null);
 				}
 			}
 		}
