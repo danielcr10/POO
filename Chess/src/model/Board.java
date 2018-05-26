@@ -9,14 +9,28 @@ public class Board {
 	private Piece[][] pieces = new Piece[dimension][dimension];
 	
 	public Board() {
-		pieces[6][0] = new Pawn(Color.BLACK);
-		pieces[6][1] = new Pawn(Color.BLACK);
-		pieces[6][2] = new Pawn(Color.BLACK);
-		pieces[6][3] = new Pawn(Color.BLACK);
-		pieces[6][4] = new Pawn(Color.BLACK);
-		pieces[6][5] = new Pawn(Color.BLACK);
-		pieces[6][6] = new Pawn(Color.BLACK);
-		pieces[6][7] = new Pawn(Color.BLACK);
+		for (int k=0; k<8; k++) {
+			pieces[1][k] = new Pawn(Color.BLACK);
+			pieces[6][k] = new Pawn(Color.WHITE);
+		}
+		
+		pieces[0][7] = new Rook(Color.BLACK);
+		pieces[0][6] = new Knight(Color.BLACK);
+		pieces[0][5] = new Bishop(Color.BLACK);
+		pieces[0][4] = new King(Color.BLACK);
+		pieces[0][3] = new Queen(Color.BLACK);
+		pieces[0][2] = new Bishop(Color.BLACK);
+		pieces[0][1] = new Knight(Color.BLACK);
+		pieces[0][0] = new Rook(Color.BLACK);
+		
+		pieces[7][7] = new Rook(Color.WHITE);
+		pieces[7][6] = new Knight(Color.WHITE);
+		pieces[7][5] = new Bishop(Color.WHITE);
+		pieces[7][4] = new King(Color.WHITE);
+		pieces[7][3] = new Queen(Color.WHITE);
+		pieces[7][2] = new Bishop(Color.WHITE);
+		pieces[7][1] = new Knight(Color.WHITE);
+		pieces[7][0] = new Rook(Color.WHITE);
 	}
 	
 	public boolean squareIsVacant(Point position) {
