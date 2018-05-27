@@ -26,7 +26,7 @@ public class Rook extends Piece {
 					}
 					break;
 				}
-		}
+			}
 			p.y = from.y;
 			for(int k=1;p.y>0;k--) {
 				p.y = from.y - k;
@@ -40,7 +40,7 @@ public class Rook extends Piece {
 					}
 					break;
 				}
-		}
+			}
 			p.x = from.x;
 			for(int j=1;p.x<=Board.dimension - 1;j++) {
 				p.x = from.x + j;
@@ -54,7 +54,7 @@ public class Rook extends Piece {
 					}
 					break;
 				}
-		}
+			}
 			p.x = from.x;
 			for(int l=1;p.x>0;l++) {
 				p.x = from.x + l;
@@ -68,7 +68,7 @@ public class Rook extends Piece {
 					}
 					break;
 				}
-		}
+			}
 		}
 		final Point[] possibilitiesArray = (Point[]) possibilitiesList.toArray();
 		
