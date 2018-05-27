@@ -15,7 +15,7 @@ public class Rook extends Piece {
 			Point p = (Point)from.clone();
 			p.y = from.y;
 			for(int i=1;p.y<=Board.dimension - 1;i++) {
-				p.y = p.y + i;
+				p.y = from.y + i;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -29,7 +29,7 @@ public class Rook extends Piece {
 		}
 			p.y = from.y;
 			for(int k=1;p.y>0;k--) {
-				p.y = p.y - k;
+				p.y = from.y - k;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -43,7 +43,7 @@ public class Rook extends Piece {
 		}
 			p.x = from.x;
 			for(int j=1;p.x<=Board.dimension - 1;j++) {
-				p.x = p.x + j;
+				p.x = from.x + j;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -57,7 +57,7 @@ public class Rook extends Piece {
 		}
 			p.x = from.x;
 			for(int l=1;p.x>0;l++) {
-				p.x = p.x + l;
+				p.x = from.x + l;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
