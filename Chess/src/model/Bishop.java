@@ -16,8 +16,8 @@ public class Bishop extends Piece {
 			p.x = from.x;
 			p.y = from.y;
 			for(int i=1;p.y<=Board.dimension - 1 && p.x<=Board.dimension - 1;i++) {
-				p.x = p.x + i;
-				p.y = p.y + i;
+				p.x = from.x + i;
+				p.y = from.y + i;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -33,8 +33,8 @@ public class Bishop extends Piece {
 			p.x = from.x;
 			p.y = from.y;
 			for(int k=1;p.y<=Board.dimension - 1 && p.x>=0;k++) {
-				p.x = p.x - k;
-				p.y = p.y + k;
+				p.x = from.x - k;
+				p.y = from.y + k;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -50,8 +50,8 @@ public class Bishop extends Piece {
 			p.x = from.x;
 			p.y = from.y;
 			for(int j=1;p.y>=0 && p.x<=Board.dimension - 1;j++) {
-				p.x = p.x + j;
-				p.y = p.y - j;
+				p.x = from.x + j;
+				p.y = from.y - j;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
@@ -67,8 +67,8 @@ public class Bishop extends Piece {
 			p.x = from.x;
 			p.y = from.y;
 			for(int l=1;p.y>=0 && p.x>=0;l++) {
-				p.x = p.x - l;
-				p.y = p.y - l;
+				p.x = from.x - l;
+				p.y = from.y - l;
 				if(domain.squareIsVacant(p)) {
 					possibilitiesList.add((Point)p.clone());
 				}
