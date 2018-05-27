@@ -33,11 +33,11 @@ public class Board {
 	}
 	
 	public boolean squareIsVacant(Point position) {
-		return pieces[position.x][position.y] == null;
+		return pieces[position.y][position.x] == null;
 	}
 	
 	public Piece getPieceAt(Point position) {
-		return pieces[position.x][position.y];
+		return pieces[position.y][position.x];
 	}
 	
 	public String[][] currentState() {
