@@ -12,42 +12,24 @@ public class Board {
 		for (int k=0; k<8; k++) {
 			pieces[1][k] = new Pawn(Color.BLACK);
 			pieces[6][k] = new Pawn(Color.WHITE);
-			switch(k)
-			{
-			case 0: pieces[0][k] = new Rook(Color.BLACK);
-					pieces[7][k] = new Rook(Color.WHITE);
-			break;
+		}
+		pieces[0][7] = new Rook(Color.BLACK);
+		pieces[0][6] = new Knight(Color.BLACK);
+		pieces[0][5] = new Bishop(Color.BLACK);
+		pieces[0][4] = new King(Color.BLACK);
+		pieces[0][3] = new Queen(Color.BLACK);
+		pieces[0][2] = new Bishop(Color.BLACK);
+		pieces[0][1] = new Knight(Color.BLACK);
+		pieces[0][0] = new Rook(Color.BLACK);
 			
-			case 1: pieces[0][k] = new Knight(Color.BLACK);
-					pieces[7][k] = new Knight(Color.WHITE);
-			break;
-			
-			case 2: pieces[0][k] = new Bishop(Color.BLACK);
-					pieces[7][k] = new Bishop(Color.WHITE);
-			break;
-			
-			case 3: pieces[0][k] = new Queen(Color.BLACK);
-					pieces[7][k] = new Queen(Color.WHITE);
-			break;
-			
-			case 4: pieces[0][k] = new King(Color.BLACK);
-					pieces[7][k] = new King(Color.WHITE);
-			break;
-			
-			case 5: pieces[0][k] = new Bishop(Color.BLACK);
-					pieces[7][k] = new Bishop(Color.WHITE);
-			break;
-			
-			case 6: pieces[0][k] = new Knight(Color.BLACK);
-					pieces[7][k] = new Knight(Color.WHITE);
-			break;
-			
-			case 7: pieces[0][k] = new Rook(Color.BLACK);
-					pieces[7][k] = new Rook(Color.WHITE);
-			break;
-		
-			}
-		}	
+		pieces[7][7] = new Rook(Color.WHITE);
+		pieces[7][6] = new Knight(Color.WHITE);
+		pieces[7][5] = new Bishop(Color.WHITE);
+		pieces[7][4] = new King(Color.WHITE);
+		pieces[7][3] = new Queen(Color.WHITE);
+		pieces[7][2] = new Bishop(Color.WHITE);
+		pieces[7][1] = new Knight(Color.WHITE);
+		pieces[7][0] = new Rook(Color.WHITE);	
 	}
 	
 	public boolean squareIsVacant(Point position) {
