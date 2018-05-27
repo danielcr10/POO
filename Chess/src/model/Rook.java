@@ -21,7 +21,7 @@ public class Rook extends Piece {
 				}
 				else {
 					final Piece piece = domain.getPieceAt(p);
-					if(piece.getColor() != this.getColor()) {
+					if(piece.getColor() != pieceColor) {
 						possibilitiesList.add((Point)p.clone());
 					}
 					break;
@@ -35,7 +35,7 @@ public class Rook extends Piece {
 				}
 				else {
 					final Piece piece = domain.getPieceAt(p);
-					if(piece.getColor() != this.getColor()) {
+					if(piece.getColor() != pieceColor) {
 						possibilitiesList.add((Point)p.clone());
 					}
 					break;
@@ -49,7 +49,7 @@ public class Rook extends Piece {
 				}
 				else {
 					final Piece piece = domain.getPieceAt(p);
-					if(piece.getColor() != this.getColor()) {
+					if(piece.getColor() != pieceColor) {
 						possibilitiesList.add((Point)p.clone());
 					}
 					break;
@@ -63,7 +63,7 @@ public class Rook extends Piece {
 				}
 				else {
 					final Piece piece = domain.getPieceAt(p);
-					if(piece.getColor() != this.getColor()) {
+					if(piece.getColor() != pieceColor) {
 						possibilitiesList.add((Point)p.clone());
 					}
 					break;
