@@ -40,6 +40,10 @@ public class Board {
 		return pieces[position.y][position.x];
 	}
 	
+	public boolean contains(Point position) {
+		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
+	}
+
 	public String[][] currentState() {
 		String[][] boardAsString = new String[dimension][dimension];
 		for(int i = 0; i < boardAsString.length; i++) {
