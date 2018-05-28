@@ -38,6 +38,7 @@ public class Rook extends Piece {
 				break;
 			}
 		}
+		p.y = from.y;
 		for(int j=1;p.x<Board.dimension - 1;j++) {
 			p.x = from.x + j;
 			if(domain.squareIsVacant(p)) {
