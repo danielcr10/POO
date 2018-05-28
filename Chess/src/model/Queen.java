@@ -36,6 +36,7 @@ public class Queen extends Piece {
 				break;
 			}
 		}
+		p.y = from.y;
 		for (int j = 1; p.x < Board.dimension - 1; j++) {
 			p.x = from.x + j;
 			if (domain.squareIsVacant(p)) {
@@ -49,7 +50,7 @@ public class Queen extends Piece {
 			}
 		}
 		for (int l = 1; p.x > 0; l++) {
-			p.x = from.x + l;
+			p.x = from.x - l;
 			if (domain.squareIsVacant(p)) {
 				possibilitiesList.add((Point) p.clone());
 			} else {
