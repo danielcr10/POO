@@ -7,12 +7,9 @@ public class MainWindow {
 	
 	JFrame frame;
 	
-	BoardView boardView;
-	
-	public MainWindow(BoardView boardView) {
+	public MainWindow(JPanel boardView) {
 		frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.boardView = boardView;
 		frame.setContentPane(boardView);
 		adjustSize();
 		frame.setVisible(true);
