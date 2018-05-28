@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class BoardView extends JPanel {
 
-	static final String imagesPath = "images";
-	static final String piecesImagesPath = "pieces";
-	static final double boardFrameSize = 71;
-	static final int dimension = 8;
+	private static final String imagesPath = "images";
+	private static final String piecesImagesPath = "pieces";
+	private static final double boardFrameSize = 71;
+	private static final int dimension = 8;
 	
 	Image boardFrameImage;
 	
