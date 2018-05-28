@@ -9,10 +9,10 @@ public class King extends Piece {
 		super(color);
 	}
 	
-	Point[] movePossibilities(Board domain, Point from) {
+	public Point[] movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		
-		final Point[] possibilitiesArray = (Point[]) possibilitiesList.toArray();
+		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
 		
 		return possibilitiesArray;
 	}

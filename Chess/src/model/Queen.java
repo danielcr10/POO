@@ -9,7 +9,7 @@ public class Queen extends Piece {
 		super(color);
 	}
 
-	Point[] movePossibilities(Board domain, Point from) {
+	public Point[] movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		Point p = (Point) from.clone();
 		for (int i = 1; p.y < Board.dimension - 1; i++) {
@@ -114,7 +114,7 @@ public class Queen extends Piece {
 			}
 		}
 
-		final Point[] possibilitiesArray = (Point[]) possibilitiesList.toArray();
+		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
 
 		return possibilitiesArray;
 	}
