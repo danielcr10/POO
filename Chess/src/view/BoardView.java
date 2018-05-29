@@ -1,9 +1,14 @@
 package view;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +32,8 @@ public class BoardView extends JPanel {
 	
 	HashMap<String, Image> piecesImages;
 	
+	Point clickedPoint;
+
 	public BoardView(String[][] pieces) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -35,6 +42,12 @@ public class BoardView extends JPanel {
 			System.exit(1);
 		}
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
+		addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				clickedPoint = e.getPoint();
+				repaint();
+			}
+		});
 		piecesImages = readPiecesImages();
 		this.pieces = pieces;
 	}
@@ -71,13 +84,24 @@ public class BoardView extends JPanel {
 		
 		final Dimension squareDimension = getSquareDimension();
 		
+		double x;
+		double y;
 		for(int i = 0; i < dimension; i++) {
 			for(int j = (i + 1) % 2; j < dimension; j += 2) {
-				final double x = boardFrameSize + j * squareDimension.getWidth();
-				final double y = boardFrameSize + i * squareDimension.getHeight();
+				x = boardFrameSize + j * squareDimension.getWidth();
+				y = boardFrameSize + i * squareDimension.getHeight();
 				g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 			}
 		}
+
+		if(clickedPoint != null) {
+			g.setPaint(Color.RED);
+			g.setStroke(new BasicStroke(3));
+			x = clickedPoint.getX() - (clickedPoint.getX() - boardFrameSize) % squareDimension.getWidth();
+			y = clickedPoint.getY() - (clickedPoint.getY() - boardFrameSize) % squareDimension.getHeight();
+			g.draw(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
+		}
+
 	}
 	
 	private void drawPieces(Graphics g) {
