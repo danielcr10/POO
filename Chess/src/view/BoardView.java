@@ -35,24 +35,26 @@ public class BoardView extends JPanel {
 			System.exit(1);
 		}
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
-		readPiecesImages();
+		piecesImages = readPiecesImages();
 		this.pieces = pieces;
 	}
 	
-	private void readPiecesImages() {
-		piecesImages = new HashMap<>();
+	private HashMap<String, Image> readPiecesImages() {
+		HashMap<String, Image> imagesMap = new HashMap<>();
 		try {
 			final File directory = new File(imagesPath + File.separator + piecesImagesPath);
 			for(File file : directory.listFiles()) {
 				final String filename = file.getName();
 				final String filenameWithoutExtension = filename.substring(0, filename.length() - 4);
 				final Image image = ImageIO.read(file);
-				piecesImages.put(filenameWithoutExtension, image);
+				imagesMap.put(filenameWithoutExtension, image);
 			}
 		} catch(IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
+
+		return imagesMap;
 	}
 	
 	private Dimension getSquareDimension() {
