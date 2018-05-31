@@ -13,13 +13,15 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 
 @SuppressWarnings("serial")
-public class BoardView extends JPanel {
+public class BoardView extends JPanel implements PropertyChangeListener {
 
 	private static final String imagesPath = "images";
 	private static final String piecesImagesPath = "pieces";
@@ -126,6 +128,10 @@ public class BoardView extends JPanel {
 		g.drawImage(boardFrameImage, 0, 0, null);
 		drawBoard((Graphics2D) g);
 		drawPieces(g);
+	}
+
+	public void propertyChange(PropertyChangeEvent e) {
+		System.out.println("property changed!");
 	}
 	
 }

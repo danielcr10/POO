@@ -1,10 +1,18 @@
 package model;
 
 import java.awt.Point;
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
 
 public class Board {
 	
 	static public final int dimension = 8;
+
+	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		this.pcs.addPropertyChangeListener(listener);
+	}
 	
 	private Piece[][] pieces = new Piece[dimension][dimension];
 	
@@ -31,7 +39,7 @@ public class Board {
 		pieces[7][1] = new Knight(Color.WHITE);
 		pieces[7][0] = new Rook(Color.WHITE);	
 	}
-	
+
 	public boolean squareIsVacant(Point position) {
 		return pieces[position.y][position.x] == null;
 	}

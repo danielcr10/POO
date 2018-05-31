@@ -16,6 +16,7 @@ class Chess implements Runnable {
 	public void run() {
 		Board matchBoard = new Board();
 		BoardView boardView = new BoardView(matchBoard.currentState());
+		matchBoard.addPropertyChangeListener(boardView);
 		new MainWindow(boardView);
 	}
 }
