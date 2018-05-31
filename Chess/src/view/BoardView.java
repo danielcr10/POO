@@ -95,15 +95,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 				g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 			}
 		}
-
-		if(clickedPoint != null) {
-			g.setPaint(Color.RED);
-			g.setStroke(new BasicStroke(3));
-			x = clickedPoint.getX() - (clickedPoint.getX() - boardFrameSize) % squareDimension.getWidth();
-			y = clickedPoint.getY() - (clickedPoint.getY() - boardFrameSize) % squareDimension.getHeight();
-			g.draw(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
-		}
-
 	}
 	
 	private void drawPieces(Graphics g) {
@@ -122,11 +113,26 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			}
 		}
 	}
+
+	private void drawSelectionRedSquare(Graphics2D g) {
+		final Dimension squareDimension = getSquareDimension();
+		g.setPaint(Color.RED);
+		g.setStroke(new BasicStroke(3));
+		final double x = clickedPoint.getX() - (clickedPoint.getX() - boardFrameSize) % squareDimension.getWidth();
+		final double y = clickedPoint.getY() - (clickedPoint.getY() - boardFrameSize) % squareDimension.getHeight();
+		g.draw(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
+	}
 	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+
 		g.drawImage(boardFrameImage, 0, 0, null);
 		drawBoard((Graphics2D) g);
+
+		if(clickedPoint != null) {
+			drawSelectionRedSquare((Graphics2D) g);
+		}
+
 		drawPieces(g);
 	}
 
