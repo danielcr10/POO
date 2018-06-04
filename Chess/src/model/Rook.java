@@ -11,7 +11,6 @@ public class Rook extends Piece {
 	
 	public Point[] movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>(); 
-		//final int sense = pieceColor.getValue();
 		Point p = (Point)from.clone();
 		
 		//casas para baixo
