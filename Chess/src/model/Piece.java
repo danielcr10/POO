@@ -3,7 +3,18 @@ package model;
 import java.awt.Point;
 
 enum Color {
-	BLACK, WHITE;
+	BLACK(1), WHITE(-1);
+
+	private final int value;
+
+	Color(int value) {
+		this.value = value;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
 	
 	public String toString() {
 		final String colorString = super.toString();
