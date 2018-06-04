@@ -19,6 +19,8 @@ import java.beans.PropertyChangeEvent;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import controller.ChessController;
+
 
 @SuppressWarnings("serial")
 public class BoardView extends JPanel implements PropertyChangeListener {
@@ -36,7 +38,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	
 	Point clickedPoint;
 
-	public BoardView(String[][] pieces) {
+	public BoardView(ChessController controller) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
 		} catch(IOException e) {
@@ -51,7 +53,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			}
 		});
 		piecesImages = readPiecesImages();
-		this.pieces = pieces;
+		this.pieces = controller.getBoard();
 	}
 	
 	private HashMap<String, Image> readPiecesImages() {
