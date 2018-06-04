@@ -36,7 +36,9 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	
 	HashMap<String, Image> piecesImages;
 	
-	Point clickedPoint;
+	Point clickedSquare;
+
+	ChessController controller;
 
 	public BoardView(ChessController controller) {
 		try {
@@ -48,12 +50,24 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				clickedPoint = e.getPoint();
+				Point clickedPoint = e.getPoint();
+				if(boardContainsPoint(clickedPoint)) {
+					Dimension squareDimension = getSquareDimension();
+					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
+					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
+					clickedSquare = new Point(j, i);
+				}
 				repaint();
 			}
 		});
 		piecesImages = readPiecesImages();
+		this.controller = controller;
 		this.pieces = controller.getBoard();
+	}
+
+	private boolean boardContainsPoint(Point p) {
+		return p.getX() > boardFrameSize && p.getX() < getWidth() - boardFrameSize
+			&& p.getY() > boardFrameSize && p.getY() < getHeight() - boardFrameSize;
 	}
 	
 	private HashMap<String, Image> readPiecesImages() {
@@ -120,8 +134,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		final Dimension squareDimension = getSquareDimension();
 		g.setPaint(Color.RED);
 		g.setStroke(new BasicStroke(3));
-		final double x = clickedPoint.getX() - (clickedPoint.getX() - boardFrameSize) % squareDimension.getWidth();
-		final double y = clickedPoint.getY() - (clickedPoint.getY() - boardFrameSize) % squareDimension.getHeight();
+		final double x = boardFrameSize + clickedSquare.getX() * squareDimension.getWidth();
+		final double y = boardFrameSize + clickedSquare.getY() * squareDimension.getHeight();
 		g.draw(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 	}
 	
@@ -131,7 +145,12 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		g.drawImage(boardFrameImage, 0, 0, null);
 		drawBoard((Graphics2D) g);
 
-		if(clickedPoint != null) {
+		if(clickedSquare != null) {
+			if(pieces[clickedSquare.y][clickedSquare.x] != "") {
+				for(Point p: controller.getMovePossibilities(clickedSquare)) {
+					System.out.println(p);
+				}
+			}
 			drawSelectionRedSquare((Graphics2D) g);
 		}
 
