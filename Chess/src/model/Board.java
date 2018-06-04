@@ -1,19 +1,11 @@
 package model;
 
 import java.awt.Point;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyChangeListener;
 
 public class Board {
 	
 	static public final int dimension = 8;
 
-	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		this.pcs.addPropertyChangeListener(listener);
-	}
-	
 	private Piece[][] pieces = new Piece[dimension][dimension];
 	
 	public Board() {
@@ -52,21 +44,4 @@ public class Board {
 		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
 	}
 
-	public String[][] currentState() {
-		String[][] boardAsString = new String[dimension][dimension];
-		for(int i = 0; i < boardAsString.length; i++) {
-			for(int j = 0; j < boardAsString.length; j++) {
-				final Piece piece = pieces[i][j];
-				if(piece != null) {
-					boardAsString[i][j] = piece.getClass().getSimpleName() + piece.getColor().toString();
-				}
-				else {
-					boardAsString[i][j] = "";
-				}
-				
-			}
-		}
-		
-		return boardAsString;
-	}
 }

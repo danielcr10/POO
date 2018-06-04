@@ -1,6 +1,6 @@
 import javax.swing.SwingUtilities;
 
-import model.Board;
+import model.Match;
 import view.BoardView;
 import view.MainWindow;
 
@@ -12,9 +12,9 @@ class Chess implements Runnable {
 	}
 	
 	public void run() {
-		Board matchBoard = new Board();
-		BoardView boardView = new BoardView(matchBoard.currentState());
-		matchBoard.addPropertyChangeListener(boardView);
+		Match chessMatch = new Match();
+		BoardView boardView = new BoardView(chessMatch.getBoard());
+		chessMatch.addPropertyChangeListener(boardView);
 		new MainWindow(boardView);
 	}
 }
