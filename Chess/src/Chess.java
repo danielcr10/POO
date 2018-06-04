@@ -1,5 +1,3 @@
-package controller;
-
 import javax.swing.SwingUtilities;
 
 import model.Board;
