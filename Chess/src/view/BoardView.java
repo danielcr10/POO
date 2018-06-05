@@ -40,6 +40,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	ChessController controller;
 
+	Point[] targetPositions;
+
 	public BoardView(ChessController controller) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -56,6 +58,13 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
 					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
 					clickedSquare = new Point(j, i);
+					if(positionHasPiece(clickedSquare)) {
+						targetPositions = controller.getMovePossibilities(clickedSquare);
+						for(Point p : targetPositions) {
+							System.out.println(p);
+						}
+					}
+
 				}
 				repaint();
 			}
@@ -63,6 +72,11 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		piecesImages = readPiecesImages();
 		this.controller = controller;
 		this.pieces = controller.getBoard();
+	}
+
+	private boolean positionHasPiece(Point p) {
+		final String noPiece = "";
+		return pieces[p.y][p.x] != noPiece;
 	}
 
 	private boolean boardContainsPoint(Point p) {
@@ -146,11 +160,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		drawBoard((Graphics2D) g);
 
 		if(clickedSquare != null) {
-			if(pieces[clickedSquare.y][clickedSquare.x] != "") {
-				for(Point p: controller.getMovePossibilities(clickedSquare)) {
-					System.out.println(p);
-				}
-			}
 			drawSelectionRedSquare((Graphics2D) g);
 		}
 
