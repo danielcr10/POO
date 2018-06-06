@@ -27,7 +27,7 @@ public class Pawn extends Piece {
 		}
 
 		p.y = from.y + 1 * sense;
-		if(p.y < Board.dimension) {
+		if(p.y >= 0 && p.y < Board.dimension) {
 			if(domain.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
