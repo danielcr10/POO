@@ -21,4 +21,8 @@ public class ChessController {
 		return chessMatch.getMovePossibilities(p);
 	}
 
+	public void requestPieceMove(Point from, Point to) {
+		chessMatch.movePieceFromTo(from, to);
+	}
+
 }

@@ -58,12 +58,19 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 					Dimension squareDimension = getSquareDimension();
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
 					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
-					clickedSquare = new Point(j, i);
-					if(positionHasPiece(clickedSquare)) {
-						targetPositions = controller.getMovePossibilities(clickedSquare);
-						for(Point p : targetPositions) {
-							System.out.println(p);
-						}
+					Point p = new Point(j, i);
+					if(p.equals(clickedSquare)) {
+						return;
+					}
+
+					if(targetPositions != null && targetPositions.contains(p)) {
+						controller.requestPieceMove(clickedSquare, p);
+						clickedSquare = null;
+						targetPositions = null;
+					}
+					else if(positionHasPiece(p)) {
+						clickedSquare = p;
+						targetPositions = controller.getMovePossibilities(p);
 					}
 
 				}
@@ -168,7 +175,10 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {
-		System.out.println("property changed!");
+		if(e.getPropertyName() == "board") {
+			pieces = (String[][])e.getNewValue();
+			repaint();
+		}
 	}
 	
 }

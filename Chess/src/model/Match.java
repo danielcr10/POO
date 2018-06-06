@@ -15,6 +15,13 @@ public class Match {
 		this.pcs.addPropertyChangeListener(listener);
 	}
 
+	public void movePieceFromTo(Point from, Point to) {
+		String[][] boardBefore = getBoard();
+		matchBoard.movePieceFromTo(from, to);
+		String[][] boardAfter = getBoard();
+		this.pcs.firePropertyChange("board", boardBefore, boardAfter);
+	}
+
 	public ArrayList<Point> getMovePossibilities(Point p) {
 		 ArrayList<Point> possibilities = new ArrayList<Point>();
 
