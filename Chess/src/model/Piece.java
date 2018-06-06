@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.awt.Point;
 
 enum Color {
@@ -34,6 +35,6 @@ public abstract class Piece {
 		return pieceColor;
 	}
 	
-	abstract public Point[] movePossibilities(Board domain, Point from);
+	abstract public ArrayList<Point> movePossibilities(Board domain, Point from);
 	
 }

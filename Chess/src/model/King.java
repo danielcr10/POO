@@ -9,7 +9,7 @@ public class King extends Piece {
 		super(color);
 	}
 	
-	public Point[] movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		
 		final Point[] targetPositions = getTargetPositions(from);
@@ -19,9 +19,7 @@ public class King extends Piece {
 			}
 		}
 
-		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
-		
-		return possibilitiesArray;
+		return possibilitiesList;
 	}
 	
 	private Point[] getTargetPositions(Point from) {

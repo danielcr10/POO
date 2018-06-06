@@ -15,7 +15,7 @@ public class Pawn extends Piece {
 		this.moved = moved;
 	}
 
-	public Point[] movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		final int sense = pieceColor.getValue();
 		Point p = (Point)from.clone();
@@ -48,9 +48,7 @@ public class Pawn extends Piece {
 			}
 		}
 		
-		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
-		
-		return possibilitiesArray;
+		return possibilitiesList;
 	}
 	
 }

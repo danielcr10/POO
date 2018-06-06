@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -40,7 +41,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	ChessController controller;
 
-	Point[] targetPositions;
+	ArrayList<Point> targetPositions;
 
 	public BoardView(ChessController controller) {
 		try {

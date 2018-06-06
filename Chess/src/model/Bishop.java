@@ -9,7 +9,7 @@ public class Bishop extends Piece {
 		super(color);
 	}
 
-	public Point[] movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		Point p = (Point) from.clone();
 		for (int i = 1; p.y < Board.dimension - 1 && p.x < Board.dimension - 1; i++) {
@@ -67,9 +67,8 @@ public class Bishop extends Piece {
 				break;
 			}
 		}
-		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
 
-		return possibilitiesArray;
+		return possibilitiesList;
 	}
 
 }

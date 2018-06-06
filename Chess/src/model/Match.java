@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.awt.Point;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
@@ -14,8 +15,8 @@ public class Match {
 		this.pcs.addPropertyChangeListener(listener);
 	}
 
-	public Point[] getMovePossibilities(Point p) {
-		Point[] possibilities = new Point[0];
+	public ArrayList<Point> getMovePossibilities(Point p) {
+		 ArrayList<Point> possibilities = new ArrayList<Point>();
 
 		Piece pieceAtPosition = matchBoard.getPieceAt(p);	
 		if(pieceAtPosition != null) {

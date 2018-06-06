@@ -9,7 +9,7 @@ public class Knight extends Piece {
 		super(color);
 	}
 	
-	public Point[] movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 
 		final Point[] targetPoints = getTargetPoints(from);
@@ -21,9 +21,7 @@ public class Knight extends Piece {
 			}
 		}
 		
-		final Point[] possibilitiesArray = possibilitiesList.toArray(new Point[possibilitiesList.size()]);
-		
-		return possibilitiesArray;
+		return possibilitiesList;
 	}
 	
 	private Point[] getTargetPoints(Point from) {

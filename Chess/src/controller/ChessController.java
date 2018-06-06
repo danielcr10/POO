@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.awt.Point;
 import model.Match;
 import view.BoardView;
@@ -16,7 +17,7 @@ public class ChessController {
 		return chessMatch.getBoard();
 	}
 
-	public Point[] getMovePossibilities(Point p) {
+	public ArrayList<Point> getMovePossibilities(Point p) {
 		return chessMatch.getMovePossibilities(p);
 	}
 
