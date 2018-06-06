@@ -28,7 +28,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	private static final String imagesPath = "images";
 	private static final String piecesImagesPath = "pieces";
-	private static final double boardFrameSize = 71;
+	private static final double boardFrameSize = 61;
 	private static final int dimension = 8;
 	
 	Image boardFrameImage;
