@@ -63,7 +63,7 @@ public class Board {
 	public void movePieceFromTo(Point from, Point to) {
 		try {
 			Piece pieceAtPosition = getPieceAt(from);
-			if(pieceAtPosition == null) {
+			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(this, from).contains(to)) {
 				throw new InvalidMoveException("Invalid Move Exception");
 			}
 			pieceAtPosition.move(this, from, to);
