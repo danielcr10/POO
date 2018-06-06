@@ -50,5 +50,10 @@ public class Pawn extends Piece {
 		
 		return possibilitiesList;
 	}
+
+	public void move(Board domain, Point from, Point to) {
+		super.move(domain, from, to);
+		moved = true;
+	}
 	
 }
