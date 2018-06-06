@@ -12,6 +12,8 @@ public class Rook extends Piece {
 	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>(); 
 		Point p = (Point)from.clone();
+		
+		//casas para baixo
 		for(int i=1;p.y<Board.dimension - 1;i++) {
 			p.y = from.y + i;
 			if(domain.squareIsVacant(p)) {
@@ -25,7 +27,10 @@ public class Rook extends Piece {
 				break;
 			}
 		}
-		for(int k=1;p.y>0;k--) {
+		
+		//casas para cima
+		p.y = from.y;
+		for(int k=1;p.y>0;k++) {
 			p.y = from.y - k;
 			if(domain.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
@@ -38,7 +43,10 @@ public class Rook extends Piece {
 				break;
 			}
 		}
+		
 		p.y = from.y;
+		//casas para direita
+		p.x = from.x;
 		for(int j=1;p.x<Board.dimension - 1;j++) {
 			p.x = from.x + j;
 			if(domain.squareIsVacant(p)) {
@@ -52,8 +60,11 @@ public class Rook extends Piece {
 				break;
 			}
 		}
+		
+		//casas para esquerda
+		p.x = from.x;
 		for(int l=1;p.x>0;l++) {
-			p.x = from.x + l;
+			p.x = from.x - l;
 			if(domain.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
