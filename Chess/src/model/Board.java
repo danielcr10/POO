@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.awt.Point;
 
 @SuppressWarnings("serial")
@@ -59,6 +60,22 @@ public class Board {
 	
 	public boolean contains(Point position) {
 		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
+	}
+
+	public boolean enemyPiecesCanReach(Point reachPosition, Color color) {
+		final Color oppositeColor = color == Color.WHITE ? Color.BLACK : Color.WHITE;
+		for(int i = 0; i < Board.dimension; i++) {
+			for(int j = 0; j < Board.dimension; j++) {
+				final Point p = new Point(j, i);
+				final Piece pieceAtPosition = getPieceAt(p);
+				if(pieceAtPosition != null && pieceAtPosition.getColor() == oppositeColor
+						&& pieceAtPosition.reachablePositions(this, p).contains(reachPosition)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public void movePieceFromTo(Point from, Point to) {

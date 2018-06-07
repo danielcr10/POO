@@ -17,6 +17,10 @@ public abstract class Piece {
 	
 	abstract public ArrayList<Point> movePossibilities(Board domain, Point from);
 
+	public ArrayList<Point> reachablePositions(Board domain, Point from) {
+		return movePossibilities(domain, from);
+	}
+
 	public void move(Board domain,Point from, Point to) {
 		domain.clearPosition(from);
 		domain.addPieceAt(this, to);
