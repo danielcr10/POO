@@ -5,6 +5,7 @@ import java.awt.Point;
 import model.Match;
 import view.BoardView;
 
+@SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
 
 	PlayerPermissionException(String message) {

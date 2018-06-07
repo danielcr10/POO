@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Point;
 
+@SuppressWarnings("serial")
 class InvalidMoveException extends Exception {
 
 	public InvalidMoveException(String message) {
