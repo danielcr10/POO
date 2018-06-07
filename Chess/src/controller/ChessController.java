@@ -3,7 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.awt.Point;
 import model.Match;
-import view.BoardView;
 
 @SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
