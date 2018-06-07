@@ -9,6 +9,8 @@ public class Match {
 	
 	private Board matchBoard = new Board();
 
+	private Color currentPlayer = Color.WHITE;
+
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -20,6 +22,8 @@ public class Match {
 		matchBoard.movePieceFromTo(from, to);
 		String[][] boardAfter = getBoard();
 		this.pcs.firePropertyChange("board", boardBefore, boardAfter);
+		// TODO: Melhorar a forma como fazemos essa conversão.
+		currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
 	}
 
 	public ArrayList<Point> getMovePossibilities(Point p) {
@@ -49,6 +53,15 @@ public class Match {
 		}
 		
 		return boardAsString;
+	}
+
+	public Color getPieceColorAt(Point p) {
+		Piece pieceAtPosition = matchBoard.getPieceAt(p);
+		return pieceAtPosition.getColor();
+	}
+
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 
 }
