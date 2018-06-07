@@ -154,6 +154,17 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		g.draw(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 	}
 	
+	private void drawMovesPossibilities(Graphics2D g) {
+		final Dimension squareDimension = getSquareDimension();
+		g.setPaint(new Color(255,0,0,130)); //R,G,B,Alpha 0-255
+		g.setStroke(new BasicStroke(3));
+		for(Point p : targetPositions) {
+			final double x = boardFrameSize + p.getX() * squareDimension.getWidth();
+			final double y = boardFrameSize + p.getY() * squareDimension.getHeight();
+			g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
+		}
+	}
+	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -162,6 +173,10 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 		if(clickedSquare != null) {
 			drawSelectionRedSquare((Graphics2D) g);
+		}
+		
+		if(targetPositions != null) {
+			drawMovesPossibilities((Graphics2D) g);
 		}
 
 		drawPieces(g);
