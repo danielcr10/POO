@@ -23,7 +23,7 @@ public class Match {
 	}
 
 	public ArrayList<Point> getMovePossibilities(Point p) {
-		 ArrayList<Point> possibilities = new ArrayList<Point>();
+		ArrayList<Point> possibilities = new ArrayList<Point>();
 
 		Piece pieceAtPosition = matchBoard.getPieceAt(p);	
 		if(pieceAtPosition != null) {
