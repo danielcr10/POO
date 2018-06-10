@@ -1,5 +1,6 @@
 package model;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Point;
 
@@ -17,11 +18,28 @@ public class Board {
 	static public final int dimension = 8;
 
 	private Piece[][] pieces = new Piece[dimension][dimension];
+
+	private HashMap<Color, ArrayList<Pawn>> pawns = new HashMap<Color, ArrayList<Pawn>>();
 	
 	public Board() {
+		final ArrayList<Pawn> blackPawns = new ArrayList<>();
+		final ArrayList<Pawn> whitePawns = new ArrayList<>();
+		for(int k = 0; k < Board.dimension; k++) {
+			blackPawns.add(new Pawn(Color.BLACK));
+			whitePawns.add(new Pawn(Color.WHITE));
+		}
+		pawns.put(Color.BLACK, blackPawns);
+		pawns.put(Color.WHITE, whitePawns);
+		arrangeBoard();
+	}
+
+	private void arrangeBoard() {
+		final ArrayList<Pawn> blackPawns = pawns.get(Color.BLACK);
+		final ArrayList<Pawn> whitePawns = pawns.get(Color.WHITE);
+
 		for (int k=0; k<8; k++) {
-			pieces[1][k] = new Pawn(Color.BLACK);
-			pieces[6][k] = new Pawn(Color.WHITE);
+			pieces[1][k] = blackPawns.get(k);
+			pieces[6][k] = whitePawns.get(k);
 		}
 		pieces[0][7] = new Rook(Color.BLACK);
 		pieces[0][6] = new Knight(Color.BLACK);
@@ -40,6 +58,13 @@ public class Board {
 		pieces[7][2] = new Bishop(Color.WHITE);
 		pieces[7][1] = new Knight(Color.WHITE);
 		pieces[7][0] = new Rook(Color.WHITE);	
+	}
+
+	public void setPawnsPassedStatus(Color color, boolean status) {
+		final ArrayList<Pawn> pawnsList = pawns.get(color);
+		for(Pawn piece : pawnsList) {
+			piece.setPassed(status);
+		}
 	}
 
 	public boolean squareIsVacant(Point position) {

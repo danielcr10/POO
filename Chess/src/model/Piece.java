@@ -24,6 +24,9 @@ public abstract class Piece {
 	public void move(Board domain,Point from, Point to) {
 		domain.clearPosition(from);
 		domain.addPieceAt(this, to);
+
+		// Muda o status 'passed' de todos os peões da mesma cor para false
+		domain.setPawnsPassedStatus(pieceColor, false);
 	}
 	
 }
