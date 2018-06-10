@@ -11,27 +11,31 @@ public class King extends Piece {
 	
 	public ArrayList<Point> movePossibilities(Board domain, Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
-		for(Point p : reachablePositions(domain, from)) {
-			if(!domain.enemyPiecesCanReach(p, getColor())) {
+		for(Point p : getTargetPositions(from)) {
+			if(domain.contains(p) && domain.squareIsVacant(p) && !domain.pieceIsVulnerableAt(this, p)) {
 				possibilitiesList.add(p);
+			}
+		}
+
+		possibilitiesList.addAll(attackPossibilities(domain, from));
+
+		return possibilitiesList;
+	}
+
+	public ArrayList<Point> attackPossibilities(Board domain, Point from) {
+		final ArrayList<Point> possibilitiesList = new ArrayList<>();
+		for(Point p : getTargetPositions(from)) {
+			if(domain.contains(p) && !domain.squareIsVacant(p)) {
+				final Piece piece = domain.getPieceAt(p);
+				if(piece.getColor() != pieceColor && (piece instanceof King || !domain.pieceIsVulnerableAt(this, p))) {
+					possibilitiesList.add(p);
+				}
 			}
 		}
 
 		return possibilitiesList;
 	}
 
-	public ArrayList<Point> reachablePositions(Board domain, Point from) {
-		final ArrayList<Point> positionsList = new ArrayList<>();
-		final Point[] targetPositions = getTargetPositions(from);
-		for(Point p : targetPositions) {
-			if(domain.contains(p) && (domain.squareIsVacant(p) || domain.getPieceAt(p).getColor() != pieceColor)) {
-				positionsList.add(p);
-			}
-		}
-
-		return positionsList;
-	}
-	
 	private Point[] getTargetPositions(Point from) {
 		final int targetPointCount = 8;
 		final Point[] targetPositions = new Point[targetPointCount];

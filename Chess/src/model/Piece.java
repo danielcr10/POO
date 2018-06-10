@@ -17,7 +17,7 @@ public abstract class Piece {
 	
 	abstract public ArrayList<Point> movePossibilities(Board domain, Point from);
 
-	public ArrayList<Point> reachablePositions(Board domain, Point from) {
+	public ArrayList<Point> attackPossibilities(Board domain, Point from) {
 		return movePossibilities(domain, from);
 	}
 

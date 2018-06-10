@@ -46,6 +46,10 @@ public class Board {
 		return pieces[position.y][position.x] == null;
 	}
 
+	public void setPieceAt(Piece piece, Point position) {
+		pieces[position.y][position.x] = piece;
+	}
+
 	public void clearPosition(Point position) {
 		pieces[position.y][position.x] = null;
 	}
@@ -62,20 +66,25 @@ public class Board {
 		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
 	}
 
-	public boolean enemyPiecesCanReach(Point reachPosition, Color color) {
-		final Color oppositeColor = color == Color.WHITE ? Color.BLACK : Color.WHITE;
+	public boolean pieceIsVulnerableAt(Piece piece, Point position) {
+		boolean isVunerable = false;
+		final Piece livingPiece = getPieceAt(position);
+		setPieceAt(piece, position);
+
 		for(int i = 0; i < Board.dimension; i++) {
 			for(int j = 0; j < Board.dimension; j++) {
 				final Point p = new Point(j, i);
 				final Piece pieceAtPosition = getPieceAt(p);
-				if(pieceAtPosition != null && pieceAtPosition.getColor() == oppositeColor
-						&& pieceAtPosition.reachablePositions(this, p).contains(reachPosition)) {
-					return true;
+				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities(this, p).contains(position)) {
+					isVunerable = true;
+					break;
 				}
 			}
 		}
 
-		return false;
+		setPieceAt(livingPiece, position);
+
+		return isVunerable;
 	}
 
 	public void movePieceFromTo(Point from, Point to) {
