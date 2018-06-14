@@ -20,6 +20,8 @@ public class Board {
 	private Piece[][] pieces = new Piece[dimension][dimension];
 
 	private HashMap<Color, ArrayList<Pawn>> pawns = new HashMap<Color, ArrayList<Pawn>>();
+
+	private Pawn promotePawn;
 	
 	public Board() {
 		final ArrayList<Pawn> blackPawns = new ArrayList<>();
@@ -73,6 +75,11 @@ public class Board {
 
 	public void setPieceAt(Piece piece, Point position) {
 		pieces[position.y][position.x] = piece;
+	}
+
+	public void setPromotePawn(Pawn piece) {
+		promotePawn = piece;
+		System.out.println("promote pawn set!");
 	}
 
 	public void clearPosition(Point position) {

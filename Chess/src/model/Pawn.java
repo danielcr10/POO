@@ -97,8 +97,11 @@ public class Pawn extends Piece {
 	public void move(Board domain, Point from, Point to) {
 		final int sense = pieceColor.getValue();
 		moved = true;
+		if((pieceColor == Color.WHITE && to.y == 0) || (pieceColor == Color.BLACK && to.y == Board.dimension - 1)) {
+			domain.setPromotePawn(this);
+		}
 		// Verifica se é um movimento de En Passant
-		if(to.x != from.x && domain.squareIsVacant(to)) {
+		else if(to.x != from.x && domain.squareIsVacant(to)) {
 			domain.clearPosition(new Point(to.x, to.y - 1 * sense));
 		}
 		super.move(domain, from, to);
