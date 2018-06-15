@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Knight extends Piece {
+class Knight extends Piece {
 
 	public Knight(Color color) {
 		super(color);

@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
+class Pawn extends Piece {
 	
 	private boolean moved = false;
 
