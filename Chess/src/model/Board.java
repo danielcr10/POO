@@ -82,8 +82,9 @@ public class Board {
 	}
 
 	public void setPromotePawn(Pawn piece) {
+		final Piece lastPromoted = promotePawn;
 		promotePawn = piece;
-		System.out.println("promote pawn set!");
+		pcs.firePropertyChange("promotePawn", lastPromoted, promotePawn);
 	}
 
 	public void clearPosition(Point position) {

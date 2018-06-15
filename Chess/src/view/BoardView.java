@@ -194,6 +194,9 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			pieces = (String[][])e.getNewValue();
 			repaint();
 		}
+		else if(e.getPropertyName() == "promotePawn") {
+			System.out.println("Devo abrir uma janela permitindo escolher a peca");
+		}
 	}
 	
 }
