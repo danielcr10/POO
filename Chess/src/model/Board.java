@@ -15,7 +15,7 @@ class InvalidMoveException extends Exception {
 
 }
 
-public class Board {
+class Board {
 	
 	static public final int dimension = 8;
 
