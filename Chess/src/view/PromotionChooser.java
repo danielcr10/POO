@@ -27,6 +27,10 @@ public class PromotionChooser {
 			});
 			popupMenu.add(item);
 		}
+		// Por algum motivo, se eu nao setar o JPopupMenu para visível e depois
+		// para invisível o popup demora muito pra abrir na primeira abertura.
+		popupMenu.setVisible(true);
+		popupMenu.setVisible(false);
 	}
 
 	public void openMenu(Component invoker, Point where) {
