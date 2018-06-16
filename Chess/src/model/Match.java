@@ -16,6 +16,10 @@ public class Match {
 		currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
 	}
 
+	public void promotePawn(String piece) {
+		matchBoard.promotePawnTo(piece);
+	}
+
 	public ArrayList<Point> getMovePossibilities(Point p) {
 		ArrayList<Point> possibilities = new ArrayList<Point>();
 
@@ -43,4 +47,5 @@ public class Match {
 	public void setBoardListener(PropertyChangeListener boardListener) {
 		matchBoard.addPropertyChangeListener(boardListener);
 	}
+
 }

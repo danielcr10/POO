@@ -3,8 +3,10 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Pawn extends Piece {
-	
+public class Pawn extends Piece {
+
+	private static final Class[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
+
 	private boolean moved = false;
 
 	private boolean passed = false;
@@ -98,7 +100,7 @@ class Pawn extends Piece {
 		final int sense = pieceColor.getValue();
 		moved = true;
 		if((pieceColor == Color.WHITE && to.y == 0) || (pieceColor == Color.BLACK && to.y == Board.dimension - 1)) {
-			domain.setPromotePawn(this);
+			domain.setPromotePawnPosition(this, to);
 		}
 		// Verifica se é um movimento de En Passant
 		else if(to.x != from.x && domain.squareIsVacant(to)) {
@@ -106,6 +108,15 @@ class Pawn extends Piece {
 		}
 		super.move(domain, from, to);
 		passed = to.y == from.y + 2 * sense ? true : false;
+	}
+
+	public static String[] getPromotionPossibilities() {
+		final ArrayList<String> possibilities = new ArrayList<String>();
+		for(Class c : canPromoteTo) {
+			possibilities.add(c.getSimpleName());
+		}
+
+		return possibilities.toArray(new String[possibilities.size()]);
 	}
 	
 }

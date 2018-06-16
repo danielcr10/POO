@@ -26,6 +26,8 @@ class Board {
 	private HashMap<Color, ArrayList<Pawn>> pawns = new HashMap<Color, ArrayList<Pawn>>();
 
 	private Pawn promotePawn;
+
+	private Point promotePawnPosition;
 	
 	public Board() {
 		final ArrayList<Pawn> blackPawns = new ArrayList<>();
@@ -81,10 +83,11 @@ class Board {
 		board[position.y][position.x] = piece;
 	}
 
-	public void setPromotePawn(Pawn piece) {
-		final Piece lastPromoted = promotePawn;
+	public void setPromotePawnPosition(Pawn piece, Point position) {
 		promotePawn = piece;
-		pcs.firePropertyChange("promotePawn", lastPromoted, promotePawn);
+		final Point lastPosition = promotePawnPosition;
+		promotePawnPosition = position;
+		pcs.firePropertyChange("promotePawnPosition", lastPosition, promotePawnPosition);
 	}
 
 	public void clearPosition(Point position) {
@@ -97,6 +100,10 @@ class Board {
 
 	public void addPieceAt(Piece piece, Point position) {
 		board[position.y][position.x] = piece;
+	}
+
+	private Point getPromotePawnPosition() {
+		return promotePawnPosition;
 	}
 	
 	public boolean contains(Point position) {
@@ -140,6 +147,15 @@ class Board {
 		}
 	}
 
+	public void promotePawnTo(String piece) {
+		final String[][] boardBefore = getBoardState();
+		setPieceAt(createPieceFromString(piece, promotePawn.getColor()), getPromotePawnPosition());
+		final String[][] boardAfter = getBoardState();
+		pcs.firePropertyChange("board", boardBefore, boardAfter);
+		promotePawn = null;
+		promotePawnPosition = null;
+	}
+
 	public String[][] getBoardState() {
 		String[][] boardAsString = new String[Board.dimension][Board.dimension];
 		for(int i = 0; i < boardAsString.length; i++) {
@@ -155,6 +171,24 @@ class Board {
 		}
 
 		return boardAsString;
+	}
+
+	private Piece createPieceFromString(String pieceName, Color color) {
+		Piece piece = null;
+		if(pieceName.contains("Rook")) {
+			piece = new Rook(color);
+		}
+		else if(pieceName.contains("Knight")) {
+			piece = new Knight(color);
+		}
+		else if(pieceName.contains("Bishop")) {
+			piece = new Bishop(color);
+		}
+		else if(pieceName.contains("Queen")) {
+			piece = new Queen(color);
+		}
+
+		return piece;
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

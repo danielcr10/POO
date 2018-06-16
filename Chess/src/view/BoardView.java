@@ -37,11 +37,15 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	
 	HashMap<String, Image> piecesImages;
 	
+	Point clickedPoint;
+
 	Point clickedSquare;
 
 	ChessController controller;
 
 	ArrayList<Point> targetPositions;
+
+	PromotionChooser chooser;
 
 	public BoardView(ChessController controller) {
 		try {
@@ -53,7 +57,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Point clickedPoint = e.getPoint();
+				clickedPoint = e.getPoint();
 				if(boardContainsPoint(clickedPoint)) {
 					Dimension squareDimension = getSquareDimension();
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
@@ -80,6 +84,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		piecesImages = readPiecesImages();
 		this.controller = controller;
 		this.pieces = controller.getBoard();
+		chooser = new PromotionChooser(controller);
 	}
 
 	private boolean positionHasPiece(Point p) {
@@ -194,9 +199,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			pieces = (String[][])e.getNewValue();
 			repaint();
 		}
-		else if(e.getPropertyName() == "promotePawn") {
-			System.out.println("Devo abrir uma janela permitindo escolher a peca");
+		else if(e.getPropertyName() == "promotePawnPosition") {
+			chooser.openMenu(this, clickedPoint);
 		}
 	}
-	
 }
