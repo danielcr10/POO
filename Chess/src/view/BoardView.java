@@ -75,10 +75,10 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 					else if(positionHasPiece(p) && controller.playerHasPermission(p)) {
 						clickedSquare = p;
 						targetPositions = controller.getMovePossibilities(p);
+						repaint();
 					}
 
 				}
-				repaint();
 			}
 		});
 		piecesImages = readPiecesImages();
