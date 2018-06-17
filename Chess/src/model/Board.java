@@ -98,10 +98,6 @@ class Board {
 		return board[position.y][position.x];
 	}
 
-	public void addPieceAt(Piece piece, Point position) {
-		board[position.y][position.x] = piece;
-	}
-
 	private Point getPromotePawnPosition() {
 		return promotePawnPosition;
 	}
