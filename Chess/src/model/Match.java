@@ -25,7 +25,7 @@ public class Match {
 
 		Piece pieceAtPosition = matchBoard.getPieceAt(p);	
 		if(pieceAtPosition != null) {
-			possibilities = pieceAtPosition.movePossibilities(matchBoard, p);
+			possibilities = pieceAtPosition.movePossibilities(p);
 		}
 
 		return possibilities;

@@ -33,8 +33,8 @@ class Board {
 		final ArrayList<Pawn> blackPawns = new ArrayList<>();
 		final ArrayList<Pawn> whitePawns = new ArrayList<>();
 		for(int k = 0; k < Board.dimension; k++) {
-			blackPawns.add(new Pawn(Color.BLACK));
-			whitePawns.add(new Pawn(Color.WHITE));
+			blackPawns.add(new Pawn(this, Color.BLACK));
+			whitePawns.add(new Pawn(this, Color.WHITE));
 		}
 		pawns.put(Color.BLACK, blackPawns);
 		pawns.put(Color.WHITE, whitePawns);
@@ -49,23 +49,23 @@ class Board {
 			board[1][k] = blackPawns.get(k);
 			board[6][k] = whitePawns.get(k);
 		}
-		board[0][7] = new Rook(Color.BLACK);
-		board[0][6] = new Knight(Color.BLACK);
-		board[0][5] = new Bishop(Color.BLACK);
-		board[0][4] = new King(Color.BLACK);
-		board[0][3] = new Queen(Color.BLACK);
-		board[0][2] = new Bishop(Color.BLACK);
-		board[0][1] = new Knight(Color.BLACK);
-		board[0][0] = new Rook(Color.BLACK);
+		board[0][7] = new Rook(this, Color.BLACK);
+		board[0][6] = new Knight(this, Color.BLACK);
+		board[0][5] = new Bishop(this, Color.BLACK);
+		board[0][4] = new King(this, Color.BLACK);
+		board[0][3] = new Queen(this, Color.BLACK);
+		board[0][2] = new Bishop(this, Color.BLACK);
+		board[0][1] = new Knight(this, Color.BLACK);
+		board[0][0] = new Rook(this, Color.BLACK);
 			
-		board[7][7] = new Rook(Color.WHITE);
-		board[7][6] = new Knight(Color.WHITE);
-		board[7][5] = new Bishop(Color.WHITE);
-		board[7][4] = new King(Color.WHITE);
-		board[7][3] = new Queen(Color.WHITE);
-		board[7][2] = new Bishop(Color.WHITE);
-		board[7][1] = new Knight(Color.WHITE);
-		board[7][0] = new Rook(Color.WHITE);	
+		board[7][7] = new Rook(this, Color.WHITE);
+		board[7][6] = new Knight(this, Color.WHITE);
+		board[7][5] = new Bishop(this, Color.WHITE);
+		board[7][4] = new King(this, Color.WHITE);
+		board[7][3] = new Queen(this, Color.WHITE);
+		board[7][2] = new Bishop(this, Color.WHITE);
+		board[7][1] = new Knight(this, Color.WHITE);
+		board[7][0] = new Rook(this, Color.WHITE);
 	}
 
 	public void setPawnsPassedStatus(Color color, boolean status) {
@@ -115,7 +115,7 @@ class Board {
 			for(int j = 0; j < Board.dimension; j++) {
 				final Point p = new Point(j, i);
 				final Piece pieceAtPosition = getPieceAt(p);
-				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities(this, p).contains(position)) {
+				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities(p).contains(position)) {
 					isVunerable = true;
 					break;
 				}
@@ -130,11 +130,11 @@ class Board {
 	public void movePieceFromTo(Point from, Point to) {
 		try {
 			Piece pieceAtPosition = getPieceAt(from);
-			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(this, from).contains(to)) {
+			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(from).contains(to)) {
 				throw new InvalidMoveException("Invalid Move Exception");
 			}
 			final String[][] boardBefore = getBoardState();
-			pieceAtPosition.move(this, from, to);
+			pieceAtPosition.move(from, to);
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidMoveException e) {
@@ -172,16 +172,16 @@ class Board {
 	private Piece createPieceFromString(String pieceName, Color color) {
 		Piece piece = null;
 		if(pieceName.contains("Rook")) {
-			piece = new Rook(color);
+			piece = new Rook(this, color);
 		}
 		else if(pieceName.contains("Knight")) {
-			piece = new Knight(color);
+			piece = new Knight(this, color);
 		}
 		else if(pieceName.contains("Bishop")) {
-			piece = new Bishop(color);
+			piece = new Bishop(this, color);
 		}
 		else if(pieceName.contains("Queen")) {
-			piece = new Queen(color);
+			piece = new Queen(this, color);
 		}
 
 		return piece;

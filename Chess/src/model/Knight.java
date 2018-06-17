@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 class Knight extends Piece {
 
-	public Knight(Color color) {
-		super(color);
+	public Knight(Board board, Color color) {
+		super(board, color);
 	}
 	
-	public ArrayList<Point> movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 
 		final Point[] targetPoints = getTargetPoints(from);
 		for(Point p : targetPoints) {
-			if(domain.contains(p)) {
-				if(domain.squareIsVacant(p) || domain.getPieceAt(p).getColor() != pieceColor) {
+			if(pieceBoard.contains(p)) {
+				if(pieceBoard.squareIsVacant(p) || pieceBoard.getPieceAt(p).getColor() != pieceColor) {
 					possibilitiesList.add(p);
 				}
 			}

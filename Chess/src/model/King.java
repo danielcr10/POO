@@ -5,29 +5,29 @@ import java.util.ArrayList;
 
 class King extends Piece {
 
-	public King(Color color) {
-		super(color);
+	public King(Board board, Color color) {
+		super(board, color);
 	}
 	
-	public ArrayList<Point> movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		for(Point p : getTargetPositions(from)) {
-			if(domain.contains(p) && domain.squareIsVacant(p) && !domain.pieceIsVulnerableAt(this, p)) {
+			if(pieceBoard.contains(p) && pieceBoard.squareIsVacant(p) && !pieceBoard.pieceIsVulnerableAt(this, p)) {
 				possibilitiesList.add(p);
 			}
 		}
 
-		possibilitiesList.addAll(attackPossibilities(domain, from));
+		possibilitiesList.addAll(attackPossibilities(from));
 
 		return possibilitiesList;
 	}
 
-	public ArrayList<Point> attackPossibilities(Board domain, Point from) {
+	public ArrayList<Point> attackPossibilities(Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		for(Point p : getTargetPositions(from)) {
-			if(domain.contains(p) && !domain.squareIsVacant(p)) {
-				final Piece piece = domain.getPieceAt(p);
-				if(piece.getColor() != pieceColor && (piece instanceof King || !domain.pieceIsVulnerableAt(this, p))) {
+			if(pieceBoard.contains(p) && !pieceBoard.squareIsVacant(p)) {
+				final Piece piece = pieceBoard.getPieceAt(p);
+				if(piece.getColor() != pieceColor && (piece instanceof King || !pieceBoard.pieceIsVulnerableAt(this, p))) {
 					possibilitiesList.add(p);
 				}
 			}

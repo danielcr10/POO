@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 class Bishop extends Piece {
 
-	public Bishop(Color color) {
-		super(color);
+	public Bishop(Board board, Color color) {
+		super(board, color);
 	}
 
-	public ArrayList<Point> movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities(Point from) {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		Point p = (Point) from.clone();
 		//movimenta na diagonal direita inferior
@@ -18,10 +18,10 @@ class Bishop extends Piece {
 		for (int i = 1; p.y < Board.dimension - 1 && p.x < Board.dimension - 1; i++) {
 			p.x = from.x + i;
 			p.y = from.y + i;
-			if (domain.squareIsVacant(p)) {
+			if (pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point) p.clone());
 			} else {
-				final Piece piece = domain.getPieceAt(p);
+				final Piece piece = pieceBoard.getPieceAt(p);
 				if (piece.getColor() != pieceColor) {
 					possibilitiesList.add((Point) p.clone());
 				}
@@ -34,10 +34,10 @@ class Bishop extends Piece {
 		for (int k = 1; p.y < Board.dimension - 1 && p.x > 0; k++) {
 			p.x = from.x - k;
 			p.y = from.y + k;
-			if (domain.squareIsVacant(p)) {
+			if (pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point) p.clone());
 			} else {
-				final Piece piece = domain.getPieceAt(p);
+				final Piece piece = pieceBoard.getPieceAt(p);
 				if (piece.getColor() != pieceColor) {
 					possibilitiesList.add((Point) p.clone());
 				}
@@ -50,10 +50,10 @@ class Bishop extends Piece {
 		for (int j = 1; p.y > 0 && p.x < Board.dimension - 1; j++) {
 			p.x = from.x + j;
 			p.y = from.y - j;
-			if (domain.squareIsVacant(p)) {
+			if (pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point) p.clone());
 			} else {
-				final Piece piece = domain.getPieceAt(p);
+				final Piece piece = pieceBoard.getPieceAt(p);
 				if (piece.getColor() != pieceColor) {
 					possibilitiesList.add((Point) p.clone());
 				}
@@ -66,10 +66,10 @@ class Bishop extends Piece {
 		for (int l = 1; p.y > 0 && p.x > 0; l++) {
 			p.x = from.x - l;
 			p.y = from.y - l;
-			if (domain.squareIsVacant(p)) {
+			if (pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point) p.clone());
 			} else {
-				final Piece piece = domain.getPieceAt(p);
+				final Piece piece = pieceBoard.getPieceAt(p);
 				if (piece.getColor() != pieceColor) {
 					possibilitiesList.add((Point) p.clone());
 				}
