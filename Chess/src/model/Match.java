@@ -21,11 +21,14 @@ public class Match {
 	}
 
 	public ArrayList<Point> getMovePossibilities(Point p) {
-		ArrayList<Point> possibilities = new ArrayList<Point>();
+		ArrayList<Point> possibilities; 
 
-		Piece pieceAtPosition = matchBoard.getPieceAt(p);	
-		if(pieceAtPosition != null) {
+		if(!matchBoard.squareIsVacant(p)) {
+			final Piece pieceAtPosition = matchBoard.getPieceAt(p);	
 			possibilities = pieceAtPosition.movePossibilities(p);
+		}
+		else {
+			possibilities = new ArrayList<Point>();
 		}
 
 		return possibilities;
