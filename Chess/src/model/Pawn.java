@@ -37,16 +37,15 @@ public class Pawn extends Piece {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		final int sense = pieceColor.getValue();
 		Point p = (Point)from.clone();
-		if(!moved) {
-			p.y = from.y + 2 * sense;
-			if(pieceBoard.squareIsVacant(p)) {
-				possibilitiesList.add((Point)p.clone());
-			}
-		}
-
 		p.y = from.y + 1 * sense;
 		if(p.y >= 0 && p.y < Board.dimension && pieceBoard.squareIsVacant(p)) {
 			possibilitiesList.add((Point)p.clone());
+			if(!moved) {
+				p.y = from.y + 2 * sense;
+				if(pieceBoard.squareIsVacant(p)) {
+					possibilitiesList.add((Point)p.clone());
+				}
+			}
 		}
 
 		possibilitiesList.addAll(attackPossibilities(from));
