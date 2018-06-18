@@ -13,21 +13,24 @@ public class PromotionChooser {
 
 	private JPopupMenu popupMenu = new JPopupMenu();
 
-	private Component invoker;
+	private BoardView parent;
 
 	private ChessController controller;
 
 	private Point pawnPosition;
 
-	public PromotionChooser(Component invoker, ChessController controller) {
+	public PromotionChooser(BoardView parent, ChessController controller) {
 		this.controller = controller;
-		this.invoker = invoker;
+		this.parent = parent;
 		for(String label : controller.getPawnPromotionPossibilities()) {
 			final JMenuItem item = new JMenuItem(label);
 			item.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					final JMenuItem selectedItem = (JMenuItem) e.getSource();
 					controller.requestPawnPromotionAt(pawnPosition, selectedItem.getText());
+					pawnPosition = null;
+					parent.promotionPosition = null;
+					parent.clickedSquare = null;
 				}
 			});
 			popupMenu.add(item);
@@ -43,7 +46,7 @@ public class PromotionChooser {
 	}
 
 	public void openMenu(Point where) {
-		popupMenu.show(invoker, where.x, where.y);
+		popupMenu.show(parent, where.x, where.y);
 	}
 
 }

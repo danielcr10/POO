@@ -45,6 +45,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	PromotionChooser chooser;
 
+	Point promotionPosition;
+
 	public BoardView(ChessController controller) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -61,20 +63,32 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
 					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
 					Point p = new Point(j, i);
-					if(p.equals(clickedSquare)) {
+					if(promotionPosition == null && p.equals(clickedSquare)) {
 						return;
 					}
 
-					if(targetPositions != null && targetPositions.contains(p)) {
+					if(promotionPosition != null) {
+						if(p.equals(promotionPosition)) {
+							clickedSquare = promotionPosition;
+							targetPositions = null;
+							repaint();
+							chooser.openMenu(clickedPoint);
+						}
+					}
+					else if(targetPositions != null && targetPositions.contains(p) && promotionPosition == null) {
 						controller.requestPieceMove(clickedSquare, p);
-						clickedSquare = null;
+						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
+							promotionPosition = new Point(j, i);
+							clickedSquare = promotionPosition;
+							chooser.setPawnPosition(promotionPosition);
+							chooser.openMenu(clickedPoint);
+						}
+						else {
+							clickedSquare = null;
+						}
 						targetPositions = null;
 					}
 					else if(positionHasPiece(p)) {
-						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
-							chooser.setPawnPosition(p);
-							chooser.openMenu(clickedPoint);
-						}
 						if(controller.playerHasPermission(p)) {
 							clickedSquare = p;
 							targetPositions = controller.getMovePossibilities(p);
