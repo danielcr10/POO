@@ -3,32 +3,15 @@ package model;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Point;
-import java.beans.PropertyChangeSupport;
-import java.beans.PropertyChangeListener;
-
-@SuppressWarnings("serial")
-class InvalidMoveException extends Exception {
-
-	public InvalidMoveException(String message) {
-		super(message);
-	}
-
-}
 
 class Board {
 	
 	static public final int dimension = 8;
 
-	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
 	private Piece[][] board = new Piece[dimension][dimension];
 
 	private HashMap<Color, ArrayList<Pawn>> pawns = new HashMap<Color, ArrayList<Pawn>>();
 
-	private Pawn promotePawn;
-
-	private Point promotePawnPosition;
-	
 	public Board() {
 		final ArrayList<Pawn> blackPawns = new ArrayList<>();
 		final ArrayList<Pawn> whitePawns = new ArrayList<>();
@@ -83,13 +66,6 @@ class Board {
 		board[position.y][position.x] = piece;
 	}
 
-	public void setPromotePawnPosition(Pawn piece, Point position) {
-		promotePawn = piece;
-		final Point lastPosition = promotePawnPosition;
-		promotePawnPosition = position;
-		pcs.firePropertyChange("promotePawnPosition", lastPosition, promotePawnPosition);
-	}
-
 	public void clearPosition(Point position) {
 		board[position.y][position.x] = null;
 	}
@@ -98,10 +74,6 @@ class Board {
 		return board[position.y][position.x];
 	}
 
-	private Point getPromotePawnPosition() {
-		return promotePawnPosition;
-	}
-	
 	public boolean contains(Point position) {
 		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
 	}
@@ -127,67 +99,4 @@ class Board {
 		return isVunerable;
 	}
 
-	public void movePieceFromTo(Point from, Point to) {
-		try {
-			Piece pieceAtPosition = getPieceAt(from);
-			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(from).contains(to)) {
-				throw new InvalidMoveException("Invalid Move Exception");
-			}
-			final String[][] boardBefore = getBoardState();
-			pieceAtPosition.move(from, to);
-			final String[][] boardAfter = getBoardState();
-			pcs.firePropertyChange("board", boardBefore, boardAfter);
-		} catch(InvalidMoveException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		}
-	}
-
-	public void promotePawnTo(String piece) {
-		final String[][] boardBefore = getBoardState();
-		setPieceAt(createPieceFromString(piece, promotePawn.getColor()), getPromotePawnPosition());
-		final String[][] boardAfter = getBoardState();
-		pcs.firePropertyChange("board", boardBefore, boardAfter);
-		promotePawn = null;
-		promotePawnPosition = null;
-	}
-
-	public String[][] getBoardState() {
-		String[][] boardAsString = new String[Board.dimension][Board.dimension];
-		for(int i = 0; i < boardAsString.length; i++) {
-			for(int j = 0; j < boardAsString.length; j++) {
-				final Piece piece = getPieceAt(new Point(j, i));
-				if(piece != null) {
-					boardAsString[i][j] = piece.getClass().getSimpleName() + piece.getColor().toString();
-				}
-				else {
-					boardAsString[i][j] = "";
-				}
-			}
-		}
-
-		return boardAsString;
-	}
-
-	private Piece createPieceFromString(String pieceName, Color color) {
-		Piece piece = null;
-		if(pieceName.contains("Rook")) {
-			piece = new Rook(this, color);
-		}
-		else if(pieceName.contains("Knight")) {
-			piece = new Knight(this, color);
-		}
-		else if(pieceName.contains("Bishop")) {
-			piece = new Bishop(this, color);
-		}
-		else if(pieceName.contains("Queen")) {
-			piece = new Queen(this, color);
-		}
-
-		return piece;
-	}
-
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		this.pcs.addPropertyChangeListener(listener);
-	}
 }

@@ -11,6 +11,8 @@ public class Pawn extends Piece {
 
 	private boolean passed = false;
 
+	private boolean promoted = false;
+
 	public Pawn(Board board, Color color) {
 		super(board, color);
 	}
@@ -25,6 +27,10 @@ public class Pawn extends Piece {
 
 	public boolean justPassed() {
 		return passed;
+	}
+
+	public boolean canBePromoted() {
+		return promoted;
 	}
 
 	public ArrayList<Point> movePossibilities(Point from) {
@@ -100,7 +106,7 @@ public class Pawn extends Piece {
 		final int sense = pieceColor.getValue();
 		moved = true;
 		if((pieceColor == Color.WHITE && to.y == 0) || (pieceColor == Color.BLACK && to.y == Board.dimension - 1)) {
-			pieceBoard.setPromotePawnPosition(this, to);
+			promoted = true;
 		}
 		// Verifica se é um movimento de En Passant
 		else if(to.x != from.x && pieceBoard.squareIsVacant(to)) {

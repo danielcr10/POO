@@ -23,7 +23,7 @@ public class ChessController {
 	}
 
 	public String[][] getBoard() {
-		return chessMatch.getBoard();
+		return chessMatch.getBoardState();
 	}
 
 	public ArrayList<Point> getMovePossibilities(Point p) {
@@ -51,8 +51,8 @@ public class ChessController {
 
 	}
 
-	public void requestPawnPromotion(String piece) {
-		chessMatch.promotePawn(piece);
+	public void requestPawnPromotionAt(Point position, String piece) {
+		chessMatch.promotePawnAt(position, piece);
 	}
 
 }

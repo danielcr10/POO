@@ -16,7 +16,7 @@ class Chess implements Runnable {
 		Match chessMatch = new Match();
 		ChessController controller = new ChessController(chessMatch);
 		BoardView boardView = new BoardView(controller);
-		chessMatch.setBoardListener(boardView);
+		chessMatch.addPropertyChangeListener(boardView);
 		new MainWindow(boardView);
 	}
 }
