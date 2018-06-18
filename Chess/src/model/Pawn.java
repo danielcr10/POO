@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements Mortal {
 
 	private static final Class[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
 
@@ -109,7 +109,10 @@ public class Pawn extends Piece {
 		}
 		// Verifica se é um movimento de En Passant
 		else if(to.x != from.x && pieceBoard.squareIsVacant(to)) {
-			pieceBoard.clearPosition(new Point(to.x, to.y - 1 * sense));
+			final Point p = new Point(to.x, to.y - 1 * sense);
+			final Mortal pieceAtPosition = (Mortal)pieceBoard.getPieceAt(p);
+			pieceAtPosition.die();
+			pieceBoard.clearPosition(p);
 		}
 		super.move(from, to);
 		passed = to.y == from.y + 2 * sense ? true : false;
@@ -122,6 +125,11 @@ public class Pawn extends Piece {
 		}
 
 		return possibilities.toArray(new String[possibilities.size()]);
+	}
+
+	public void die() {
+		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
+		set.removePawn(this);
 	}
 	
 }

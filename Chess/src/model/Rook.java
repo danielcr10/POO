@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Rook extends Piece {
+class Rook extends Piece implements Mortal {
 
 	public Rook(Board board, Color color) {
 		super(board, color);
@@ -78,6 +78,11 @@ class Rook extends Piece {
 		}
 		
 		return possibilitiesList;
+	}
+
+	public void die() {
+		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
+		set.removeRook(this);
 	}
 	
 }

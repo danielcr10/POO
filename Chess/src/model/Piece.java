@@ -30,6 +30,10 @@ public abstract class Piece {
 
 	public void move(Point from, Point to) {
 		pieceBoard.clearPosition(from);
+		if(!pieceBoard.squareIsVacant(to)) {
+			final Mortal pieceAtPosition = (Mortal)pieceBoard.getPieceAt(to);
+			pieceAtPosition.die();
+		}
 		pieceBoard.setPieceAt(this, to);
 
 		// Muda o status 'passed' de todos os peões da mesma cor para false

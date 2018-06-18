@@ -28,17 +28,9 @@ public class Match {
 	
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
-	private Board matchBoard;
+	private Board matchBoard = new Board();
 
 	private Color currentPlayer = Color.WHITE;
-
-	//private HashMap<Color, PieceSet> pieceSet = new HashMap<Color, PieceSet>();
-
-	public Match() {
-		matchBoard = new Board();
-		//pieceSet.put(Color.WHITE, new PieceSet(matchBoard, Color.WHITE));
-		//pieceSet.put(Color.BLACK, new PieceSet(matchBoard, Color.BLACK));
-	}
 
 	public void movePieceFromTo(Point from, Point to) {
 		try {
@@ -50,7 +42,6 @@ public class Match {
 			pieceAtPosition.move(from, to);
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
-			pieceAtPosition.move(from, to);
 		} catch(InvalidMoveException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);

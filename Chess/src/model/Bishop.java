@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Bishop extends Piece {
+class Bishop extends Piece implements Mortal {
 
 	public Bishop(Board board, Color color) {
 		super(board, color);
@@ -78,6 +78,11 @@ class Bishop extends Piece {
 		}
 
 		return possibilitiesList;
+	}
+
+	public void die() {
+		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
+		set.removeBishop(this);
 	}
 
 }

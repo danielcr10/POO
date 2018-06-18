@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Knight extends Piece {
+class Knight extends Piece implements Mortal {
 
 	public Knight(Board board, Color color) {
 		super(board, color);
@@ -37,5 +37,10 @@ class Knight extends Piece {
 		targetPoints[7] = new Point(from.x - 2, from.y + 1);
 
 		return targetPoints;
+	}
+
+	public void die() {
+		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
+		set.removeKnight(this);
 	}
 }
