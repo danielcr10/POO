@@ -81,6 +81,7 @@ class Board {
 	public boolean pieceIsVulnerableAt(Piece piece, Point position) {
 		boolean isVunerable = false;
 		final Piece livingPiece = getPieceAt(position);
+		final Point piecePosition = piece.getCurrentPosition();
 		setPieceAt(piece, position);
 
 		for(int i = 0; i < Board.dimension; i++) {
@@ -94,7 +95,14 @@ class Board {
 			}
 		}
 
-		setPieceAt(livingPiece, position);
+		if(livingPiece != null) {
+			setPieceAt(livingPiece, position);
+		}
+		else {
+			clearPosition(position);
+		}
+
+		setPieceAt(piece, piecePosition);
 
 		return isVunerable;
 	}
