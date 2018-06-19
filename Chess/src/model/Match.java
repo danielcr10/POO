@@ -35,11 +35,11 @@ public class Match {
 	public void movePieceFromTo(Point from, Point to) {
 		try {
 			final Piece pieceAtPosition = matchBoard.getPieceAt(from);
-			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(from).contains(to)) {
+			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities().contains(to)) {
 				throw new InvalidMoveException("Invalid Move Exception");
 			}
 			final String[][] boardBefore = getBoardState();
-			pieceAtPosition.move(from, to);
+			pieceAtPosition.move(to);
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidMoveException e) {
@@ -71,7 +71,7 @@ public class Match {
 
 		if(!matchBoard.squareIsVacant(p)) {
 			final Piece pieceAtPosition = matchBoard.getPieceAt(p);	
-			possibilities = pieceAtPosition.movePossibilities(p);
+			possibilities = pieceAtPosition.movePossibilities();
 		}
 		else {
 			possibilities = new ArrayList<Point>();

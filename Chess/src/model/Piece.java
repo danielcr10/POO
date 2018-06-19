@@ -8,10 +8,16 @@ public abstract class Piece {
 	protected Board pieceBoard;
 
 	protected Color pieceColor;
+
+	protected Point currentPosition;
 	
 	protected Piece(Board board, Color color) {
 		pieceBoard = board;
 		pieceColor = color;
+	}
+
+	public void setCurrentPosition(Point position) {
+		currentPosition = position;
 	}
 	
 	public Color getColor() {
@@ -21,15 +27,19 @@ public abstract class Piece {
 	public Board getBoard() {
 		return pieceBoard;
 	}
-	
-	abstract public ArrayList<Point> movePossibilities(Point from);
 
-	public ArrayList<Point> attackPossibilities(Point from) {
-		return movePossibilities(from);
+	public Point getCurrentPosition() {
+		return currentPosition;
+	}
+	
+	abstract public ArrayList<Point> movePossibilities();
+
+	public ArrayList<Point> attackPossibilities() {
+		return movePossibilities();
 	}
 
-	public void move(Point from, Point to) {
-		pieceBoard.clearPosition(from);
+	public void move(Point to) {
+		pieceBoard.clearPosition(currentPosition);
 		if(!pieceBoard.squareIsVacant(to)) {
 			final Mortal pieceAtPosition = (Mortal)pieceBoard.getPieceAt(to);
 			pieceAtPosition.die();

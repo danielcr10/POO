@@ -22,26 +22,27 @@ class Board {
 		final PieceSet blackPieceSet = pieceSet.get(Color.BLACK);
 		final PieceSet whitePieceSet = pieceSet.get(Color.WHITE);
 		for (int k=0; k<8; k++) {
-			board[1][k] = blackPieceSet.getPawns().get(k);
-			board[6][k] = whitePieceSet.getPawns().get(k);
+			setPieceAt(blackPieceSet.getPawns().get(k), new Point(k, 1));
+			setPieceAt(whitePieceSet.getPawns().get(k), new Point(k, 6));
 		}
-		board[0][7] = blackPieceSet.getRooks().get(0);
-		board[0][6] = blackPieceSet.getKnights().get(0);
-		board[0][5] = blackPieceSet.getBishops().get(0);
-		board[0][4] = blackPieceSet.getKing();
-		board[0][3] = blackPieceSet.getQueens().get(0);
-		board[0][2] = blackPieceSet.getBishops().get(1);
-		board[0][1] = blackPieceSet.getKnights().get(1);
-		board[0][0] = blackPieceSet.getRooks().get(1);
-			
-		board[7][7] = whitePieceSet.getRooks().get(0);
-		board[7][6] = whitePieceSet.getKnights().get(0);
-		board[7][5] = whitePieceSet.getBishops().get(0);
-		board[7][4] = whitePieceSet.getKing();
-		board[7][3] = whitePieceSet.getQueens().get(0);
-		board[7][2] = whitePieceSet.getBishops().get(1);
-		board[7][1] = whitePieceSet.getKnights().get(1);
-		board[7][0] = whitePieceSet.getRooks().get(1);
+
+		setPieceAt(blackPieceSet.getRooks().get(0), new Point(7, 0));
+		setPieceAt(blackPieceSet.getKnights().get(0), new Point(6, 0));
+		setPieceAt(blackPieceSet.getBishops().get(0), new Point(5, 0));
+		setPieceAt(blackPieceSet.getKing(), new Point(4, 0));
+		setPieceAt(blackPieceSet.getQueens().get(0), new Point(3, 0));
+		setPieceAt(blackPieceSet.getBishops().get(1), new Point(2, 0));
+		setPieceAt(blackPieceSet.getKnights().get(1), new Point(1, 0));
+		setPieceAt(blackPieceSet.getRooks().get(1), new Point(0, 0));
+
+		setPieceAt(whitePieceSet.getRooks().get(0), new Point(7, 7));
+		setPieceAt(whitePieceSet.getKnights().get(0), new Point(6, 7));
+		setPieceAt(whitePieceSet.getBishops().get(0), new Point(5, 7));
+		setPieceAt(whitePieceSet.getKing(), new Point(4, 7));
+		setPieceAt(whitePieceSet.getQueens().get(0), new Point(3, 7));
+		setPieceAt(whitePieceSet.getBishops().get(1), new Point(2, 7));
+		setPieceAt(whitePieceSet.getKnights().get(1), new Point(1, 7));
+		setPieceAt(whitePieceSet.getRooks().get(1), new Point(0, 7));
 	}
 
 	public void setPawnsPassedStatus(Color color, boolean status) {
@@ -57,6 +58,7 @@ class Board {
 	}
 
 	public void setPieceAt(Piece piece, Point position) {
+		piece.setCurrentPosition(position);
 		board[position.y][position.x] = piece;
 	}
 
@@ -85,7 +87,7 @@ class Board {
 			for(int j = 0; j < Board.dimension; j++) {
 				final Point p = new Point(j, i);
 				final Piece pieceAtPosition = getPieceAt(p);
-				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities(p).contains(position)) {
+				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities().contains(position)) {
 					isVunerable = true;
 					break;
 				}

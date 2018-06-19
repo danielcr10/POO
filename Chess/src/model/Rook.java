@@ -9,13 +9,13 @@ class Rook extends Piece implements Mortal {
 		super(board, color);
 	}
 	
-	public ArrayList<Point> movePossibilities(Point from) {
+	public ArrayList<Point> movePossibilities() {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>(); 
-		Point p = (Point)from.clone();
+		Point p = (Point)currentPosition.clone();
 		
 		//casas para baixo
 		for(int i=1;p.y<Board.dimension - 1;i++) {
-			p.y = from.y + i;
+			p.y = currentPosition.y + i;
 			if(pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
@@ -29,9 +29,9 @@ class Rook extends Piece implements Mortal {
 		}
 		
 		//casas para cima
-		p.y = from.y;
+		p.y = currentPosition.y;
 		for(int k=1;p.y>0;k++) {
-			p.y = from.y - k;
+			p.y = currentPosition.y - k;
 			if(pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
@@ -44,11 +44,11 @@ class Rook extends Piece implements Mortal {
 			}
 		}
 		
-		p.y = from.y;
+		p.y = currentPosition.y;
 		//casas para direita
-		p.x = from.x;
+		p.x = currentPosition.x;
 		for(int j=1;p.x<Board.dimension - 1;j++) {
-			p.x = from.x + j;
+			p.x = currentPosition.x + j;
 			if(pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
@@ -62,9 +62,9 @@ class Rook extends Piece implements Mortal {
 		}
 		
 		//casas para esquerda
-		p.x = from.x;
+		p.x = currentPosition.x;
 		for(int l=1;p.x>0;l++) {
-			p.x = from.x - l;
+			p.x = currentPosition.x - l;
 			if(pieceBoard.squareIsVacant(p)) {
 				possibilitiesList.add((Point)p.clone());
 			}
