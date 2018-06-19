@@ -95,11 +95,9 @@ class Board {
 			}
 		}
 
+		clearPosition(position);
 		if(livingPiece != null) {
 			setPieceAt(livingPiece, position);
-		}
-		else {
-			clearPosition(position);
 		}
 
 		setPieceAt(piece, piecePosition);
