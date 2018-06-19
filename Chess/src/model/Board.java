@@ -13,36 +13,51 @@ class Board {
 	private HashMap<Color, PieceSet> pieceSet = new HashMap<Color, PieceSet>();
 
 	public Board() {
-		pieceSet.put(Color.WHITE, new PieceSet(this, Color.WHITE));
-		pieceSet.put(Color.BLACK, new PieceSet(this, Color.BLACK));
+		final PieceSet blackPieces = new PieceSet(this, Color.BLACK);
+		final PieceSet whitePieces = new PieceSet(this, Color.WHITE);
+		pieceSet.put(Color.BLACK, blackPieces);
+		pieceSet.put(Color.WHITE, whitePieces);
 		arrangeBoard();
 	}
 
 	private void arrangeBoard() {
 		final PieceSet blackPieceSet = pieceSet.get(Color.BLACK);
 		final PieceSet whitePieceSet = pieceSet.get(Color.WHITE);
+		final ArrayList<Pawn> blackPawns = blackPieceSet.getPawns();
+		final ArrayList<Pawn> whitePawns = whitePieceSet.getPawns();
+		final ArrayList<Rook> blackRooks = blackPieceSet.getRooks();
+		final ArrayList<Rook> whiteRooks = whitePieceSet.getRooks();
+		final ArrayList<Knight> blackKnights = blackPieceSet.getKnights();
+		final ArrayList<Knight> whiteKnights = whitePieceSet.getKnights();
+		final ArrayList<Bishop> blackBishops = blackPieceSet.getBishops();
+		final ArrayList<Bishop> whiteBishops = whitePieceSet.getBishops();
+		final King blackKing = blackPieceSet.getKing();
+		final King whiteKing = whitePieceSet.getKing();
+		final Queen blackQueen = blackPieceSet.getQueens().get(0);
+		final Queen whiteQueen = whitePieceSet.getQueens().get(0);
+
 		for (int k=0; k<8; k++) {
-			setPieceAt(blackPieceSet.getPawns().get(k), new Point(k, 1));
-			setPieceAt(whitePieceSet.getPawns().get(k), new Point(k, 6));
+			setPieceAt(blackPawns.get(k), new Point(k, 1));
+			setPieceAt(whitePawns.get(k), new Point(k, 6));
 		}
 
-		setPieceAt(blackPieceSet.getRooks().get(0), new Point(7, 0));
-		setPieceAt(blackPieceSet.getKnights().get(0), new Point(6, 0));
-		setPieceAt(blackPieceSet.getBishops().get(0), new Point(5, 0));
-		setPieceAt(blackPieceSet.getKing(), new Point(4, 0));
-		setPieceAt(blackPieceSet.getQueens().get(0), new Point(3, 0));
-		setPieceAt(blackPieceSet.getBishops().get(1), new Point(2, 0));
-		setPieceAt(blackPieceSet.getKnights().get(1), new Point(1, 0));
-		setPieceAt(blackPieceSet.getRooks().get(1), new Point(0, 0));
+		setPieceAt(blackRooks.get(0), new Point(7, 0));
+		setPieceAt(blackKnights.get(0), new Point(6, 0));
+		setPieceAt(blackBishops.get(0), new Point(5, 0));
+		setPieceAt(blackKing, new Point(4, 0));
+		setPieceAt(blackQueen, new Point(3, 0));
+		setPieceAt(blackBishops.get(1), new Point(2, 0));
+		setPieceAt(blackKnights.get(1), new Point(1, 0));
+		setPieceAt(blackRooks.get(1), new Point(0, 0));
 
-		setPieceAt(whitePieceSet.getRooks().get(0), new Point(7, 7));
-		setPieceAt(whitePieceSet.getKnights().get(0), new Point(6, 7));
-		setPieceAt(whitePieceSet.getBishops().get(0), new Point(5, 7));
-		setPieceAt(whitePieceSet.getKing(), new Point(4, 7));
-		setPieceAt(whitePieceSet.getQueens().get(0), new Point(3, 7));
-		setPieceAt(whitePieceSet.getBishops().get(1), new Point(2, 7));
-		setPieceAt(whitePieceSet.getKnights().get(1), new Point(1, 7));
-		setPieceAt(whitePieceSet.getRooks().get(1), new Point(0, 7));
+		setPieceAt(whiteRooks.get(0), new Point(7, 7));
+		setPieceAt(whiteKnights.get(0), new Point(6, 7));
+		setPieceAt(whiteBishops.get(0), new Point(5, 7));
+		setPieceAt(whiteKing, new Point(4, 7));
+		setPieceAt(whiteQueen, new Point(3, 7));
+		setPieceAt(whiteBishops.get(1), new Point(2, 7));
+		setPieceAt(whiteKnights.get(1), new Point(1, 7));
+		setPieceAt(whiteRooks.get(1), new Point(0, 7));
 	}
 
 	public void setPawnsPassedStatus(Color color, boolean status) {
