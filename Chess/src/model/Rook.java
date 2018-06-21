@@ -4,6 +4,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 class Rook extends Piece implements Mortal {
+	
+	private boolean moved = false;
+	
+	public void setMoved(boolean moved) {
+		this.moved = moved;
+	}
+	
+	public boolean getMoved() {
+		return moved;
+	}
 
 	public Rook(Board board, Color color) {
 		super(board, color);
@@ -79,10 +89,27 @@ class Rook extends Piece implements Mortal {
 		
 		return possibilitiesList;
 	}
+	
+	public void doCastle() {
+		Point to = (Point)this.getCurrentPosition().clone();
+		if(this.getCurrentPosition().x == 0) {
+			to.x = 3;
+			move(to);
+		}
+		else {
+			to.x = 5;
+			move(to);
+		}
+	}
 
 	public void die() {
 		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
 		set.removeRook(this);
+	}
+	
+	public void move(Point to) {
+		super.move(to);
+		moved = true;
 	}
 	
 }
