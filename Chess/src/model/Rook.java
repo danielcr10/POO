@@ -94,12 +94,11 @@ class Rook extends Piece implements Mortal {
 		Point to = (Point)this.getCurrentPosition().clone();
 		if(this.getCurrentPosition().x == 0) {
 			to.x = 3;
-			move(to);
 		}
 		else {
 			to.x = 5;
-			move(to);
 		}
+		move(to);
 	}
 
 	public void die() {
