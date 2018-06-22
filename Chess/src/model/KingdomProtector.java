@@ -26,8 +26,6 @@ public abstract class KingdomProtector extends Piece {
 			for(Point position : possibilitiesList) {
 				final Piece livingPiece = pieceBoard.getPieceAt(position);
 				pieceBoard.setPieceAt(this, position);
-				System.out.println(position);
-				System.out.println(myKing().isInCheck());
 				if(!myKing().isInCheck()) {
 					safePossibilities.add(position);
 				}
