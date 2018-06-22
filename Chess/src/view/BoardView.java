@@ -43,6 +43,12 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	ArrayList<Point> targetPositions;
 
+	PromotionChooser chooser;
+
+	Point promotionPosition;
+
+	Point kingInCheckPosition;
+
 	public BoardView(ChessController controller) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -53,33 +59,53 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				Point clickedPoint = e.getPoint();
+				final Point clickedPoint = e.getPoint();
 				if(boardContainsPoint(clickedPoint)) {
 					Dimension squareDimension = getSquareDimension();
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
 					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
 					Point p = new Point(j, i);
-					if(p.equals(clickedSquare)) {
+					if(promotionPosition == null && p.equals(clickedSquare)) {
 						return;
 					}
 
-					if(targetPositions != null && targetPositions.contains(p)) {
+					if(promotionPosition != null) {
+						if(p.equals(promotionPosition)) {
+							clickedSquare = promotionPosition;
+							targetPositions = null;
+							repaint();
+							chooser.openMenu(clickedPoint);
+						}
+					}
+					else if(targetPositions != null && targetPositions.contains(p) && promotionPosition == null) {
 						controller.requestPieceMove(clickedSquare, p);
-						clickedSquare = null;
+						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
+							promotionPosition = new Point(j, i);
+							clickedSquare = promotionPosition;
+							chooser.setPawnPosition(promotionPosition);
+							chooser.openMenu(clickedPoint);
+						}
+						else {
+							clickedSquare = null;
+						}
+						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
 						targetPositions = null;
 					}
-					else if(positionHasPiece(p) && controller.playerHasPermission(p)) {
-						clickedSquare = p;
-						targetPositions = controller.getMovePossibilities(p);
+					else if(positionHasPiece(p)) {
+						if(controller.playerHasPermission(p)) {
+							clickedSquare = p;
+							targetPositions = controller.getMovePossibilities(p);
+							repaint();
+						}
 					}
 
 				}
-				repaint();
 			}
 		});
 		piecesImages = readPiecesImages();
 		this.controller = controller;
 		this.pieces = controller.getBoard();
+		chooser = new PromotionChooser(this, controller);
 	}
 
 	private boolean positionHasPiece(Point p) {
@@ -172,6 +198,15 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		}
 	}
 	
+	private void drawKingInCheck(Graphics2D g) {
+		final Dimension squareDimension = getSquareDimension();
+		g.setPaint(new Color(255,0,0,255)); //R,G,B,Alpha 0-255
+		g.setStroke(new BasicStroke(3));
+		final double x = boardFrameSize + kingInCheckPosition.getX() * squareDimension.getWidth();
+		final double y = boardFrameSize + kingInCheckPosition.getY() * squareDimension.getHeight();
+		g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
+	}
+	
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -185,6 +220,10 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		if(targetPositions != null) {
 			drawMovesPossibilities((Graphics2D) g);
 		}
+		
+		if(kingInCheckPosition != null) {
+			drawKingInCheck((Graphics2D) g);
+		}
 
 		drawPieces(g);
 	}
@@ -195,5 +234,4 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			repaint();
 		}
 	}
-	
 }

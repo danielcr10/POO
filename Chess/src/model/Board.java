@@ -1,67 +1,94 @@
 package model;
 
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Point;
 
-@SuppressWarnings("serial")
-class InvalidMoveException extends Exception {
-
-	public InvalidMoveException(String message) {
-		super(message);
-	}
-
-}
-
-public class Board {
+class Board {
 	
 	static public final int dimension = 8;
 
-	private Piece[][] pieces = new Piece[dimension][dimension];
-	
+	private Piece[][] board = new Piece[dimension][dimension];
+
+	private HashMap<Color, PieceSet> pieceSet = new HashMap<Color, PieceSet>();
+
 	public Board() {
+		final PieceSet blackPieces = new PieceSet(this, Color.BLACK);
+		final PieceSet whitePieces = new PieceSet(this, Color.WHITE);
+		pieceSet.put(Color.BLACK, blackPieces);
+		pieceSet.put(Color.WHITE, whitePieces);
+		arrangeBoard();
+	}
+
+	private void arrangeBoard() {
+		final PieceSet blackPieceSet = pieceSet.get(Color.BLACK);
+		final PieceSet whitePieceSet = pieceSet.get(Color.WHITE);
+		final ArrayList<Pawn> blackPawns = blackPieceSet.getPawns();
+		final ArrayList<Pawn> whitePawns = whitePieceSet.getPawns();
+		final ArrayList<Rook> blackRooks = blackPieceSet.getRooks();
+		final ArrayList<Rook> whiteRooks = whitePieceSet.getRooks();
+		final ArrayList<Knight> blackKnights = blackPieceSet.getKnights();
+		final ArrayList<Knight> whiteKnights = whitePieceSet.getKnights();
+		final ArrayList<Bishop> blackBishops = blackPieceSet.getBishops();
+		final ArrayList<Bishop> whiteBishops = whitePieceSet.getBishops();
+		final King blackKing = blackPieceSet.getKing();
+		final King whiteKing = whitePieceSet.getKing();
+		final Queen blackQueen = blackPieceSet.getQueens().get(0);
+		final Queen whiteQueen = whitePieceSet.getQueens().get(0);
+
 		for (int k=0; k<8; k++) {
-			pieces[1][k] = new Pawn(Color.BLACK);
-			pieces[6][k] = new Pawn(Color.WHITE);
+			setPieceAt(blackPawns.get(k), new Point(k, 1));
+			setPieceAt(whitePawns.get(k), new Point(k, 6));
 		}
-		pieces[0][7] = new Rook(Color.BLACK);
-		pieces[0][6] = new Knight(Color.BLACK);
-		pieces[0][5] = new Bishop(Color.BLACK);
-		pieces[0][4] = new King(Color.BLACK);
-		pieces[0][3] = new Queen(Color.BLACK);
-		pieces[0][2] = new Bishop(Color.BLACK);
-		pieces[0][1] = new Knight(Color.BLACK);
-		pieces[0][0] = new Rook(Color.BLACK);
-			
-		pieces[7][7] = new Rook(Color.WHITE);
-		pieces[7][6] = new Knight(Color.WHITE);
-		pieces[7][5] = new Bishop(Color.WHITE);
-		pieces[7][4] = new King(Color.WHITE);
-		pieces[7][3] = new Queen(Color.WHITE);
-		pieces[7][2] = new Bishop(Color.WHITE);
-		pieces[7][1] = new Knight(Color.WHITE);
-		pieces[7][0] = new Rook(Color.WHITE);	
+
+		setPieceAt(blackRooks.get(0), new Point(7, 0));
+		setPieceAt(blackKnights.get(0), new Point(6, 0));
+		setPieceAt(blackBishops.get(0), new Point(5, 0));
+		setPieceAt(blackKing, new Point(4, 0));
+		setPieceAt(blackQueen, new Point(3, 0));
+		setPieceAt(blackBishops.get(1), new Point(2, 0));
+		setPieceAt(blackKnights.get(1), new Point(1, 0));
+		setPieceAt(blackRooks.get(1), new Point(0, 0));
+
+		setPieceAt(whiteRooks.get(0), new Point(7, 7));
+		setPieceAt(whiteKnights.get(0), new Point(6, 7));
+		setPieceAt(whiteBishops.get(0), new Point(5, 7));
+		setPieceAt(whiteKing, new Point(4, 7));
+		setPieceAt(whiteQueen, new Point(3, 7));
+		setPieceAt(whiteBishops.get(1), new Point(2, 7));
+		setPieceAt(whiteKnights.get(1), new Point(1, 7));
+		setPieceAt(whiteRooks.get(1), new Point(0, 7));
+	}
+
+	public void setPawnsPassedStatus(Color color, boolean status) {
+		final PieceSet set = getPieceSet(color);
+		final ArrayList<Pawn> pawnsList = set.getPawns();
+		for(Pawn piece : pawnsList) {
+			piece.setPassed(status);
+		}
 	}
 
 	public boolean squareIsVacant(Point position) {
-		return pieces[position.y][position.x] == null;
+		return board[position.y][position.x] == null;
 	}
 
 	public void setPieceAt(Piece piece, Point position) {
-		pieces[position.y][position.x] = piece;
+		piece.setCurrentPosition(position);
+		board[position.y][position.x] = piece;
 	}
 
 	public void clearPosition(Point position) {
-		pieces[position.y][position.x] = null;
+		board[position.y][position.x] = null;
 	}
 	
 	public Piece getPieceAt(Point position) {
-		return pieces[position.y][position.x];
+		return board[position.y][position.x];
 	}
 
-	public void addPieceAt(Piece piece, Point position) {
-		pieces[position.y][position.x] = piece;
+	public PieceSet getPieceSet(Color color) {
+		return pieceSet.get(color);
 	}
-	
+
 	public boolean contains(Point position) {
 		return position.x >= 0 && position.x < Board.dimension && position.y >= 0 && position.y < Board.dimension;
 	}
@@ -69,35 +96,28 @@ public class Board {
 	public boolean pieceIsVulnerableAt(Piece piece, Point position) {
 		boolean isVunerable = false;
 		final Piece livingPiece = getPieceAt(position);
+		final Point piecePosition = piece.getCurrentPosition();
 		setPieceAt(piece, position);
 
 		for(int i = 0; i < Board.dimension; i++) {
 			for(int j = 0; j < Board.dimension; j++) {
 				final Point p = new Point(j, i);
 				final Piece pieceAtPosition = getPieceAt(p);
-				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities(this, p).contains(position)) {
+				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities().contains(position)) {
 					isVunerable = true;
 					break;
 				}
 			}
 		}
 
-		setPieceAt(livingPiece, position);
+		clearPosition(position);
+		if(livingPiece != null) {
+			setPieceAt(livingPiece, position);
+		}
+
+		setPieceAt(piece, piecePosition);
 
 		return isVunerable;
-	}
-
-	public void movePieceFromTo(Point from, Point to) {
-		try {
-			Piece pieceAtPosition = getPieceAt(from);
-			if(pieceAtPosition == null || !pieceAtPosition.movePossibilities(this, from).contains(to)) {
-				throw new InvalidMoveException("Invalid Move Exception");
-			}
-			pieceAtPosition.move(this, from, to);
-		} catch(InvalidMoveException e) {
-			System.out.println(e.getMessage());
-			System.exit(1);
-		}
 	}
 
 }

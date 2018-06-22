@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.awt.Point;
 import model.Match;
+import model.Pawn;
 
 @SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
@@ -22,15 +23,27 @@ public class ChessController {
 	}
 
 	public String[][] getBoard() {
-		return chessMatch.getBoard();
+		return chessMatch.getBoardState();
 	}
 
 	public ArrayList<Point> getMovePossibilities(Point p) {
 		return chessMatch.getMovePossibilities(p);
 	}
 
+	public String[] getPawnPromotionPossibilities() {
+		return Pawn.getPromotionPossibilities();
+	}
+
 	public boolean playerHasPermission(Point p) {
 		return chessMatch.getPieceColorAt(p) == chessMatch.getCurrentPlayer();
+	}
+
+	public boolean currentPlayerIsInCheck() {
+		return chessMatch.currentPlayerIsInCheck();
+	}
+
+	public Point requestCurrentPlayerKingPosition() {
+		return chessMatch.getCurrentPlayerKingPosition();
 	}
 
 	public void requestPieceMove(Point from, Point to) {
@@ -44,6 +57,10 @@ public class ChessController {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	public void requestPawnPromotionAt(Point position, String piece) {
+		chessMatch.promotePawnAt(position, piece);
 	}
 
 }

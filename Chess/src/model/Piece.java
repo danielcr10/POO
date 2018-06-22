@@ -5,25 +5,53 @@ import java.awt.Point;
 
 public abstract class Piece {
 	
+	protected Board pieceBoard;
+
 	protected Color pieceColor;
+
+	protected Point currentPosition;
 	
-	protected Piece(Color color) {
+	protected Piece(Board board, Color color) {
+		pieceBoard = board;
 		pieceColor = color;
+	}
+
+	public void setCurrentPosition(Point position) {
+		currentPosition = position;
 	}
 	
 	public Color getColor() {
 		return pieceColor;
 	}
-	
-	abstract public ArrayList<Point> movePossibilities(Board domain, Point from);
 
-	public ArrayList<Point> attackPossibilities(Board domain, Point from) {
-		return movePossibilities(domain, from);
+	public Board getBoard() {
+		return pieceBoard;
 	}
 
-	public void move(Board domain,Point from, Point to) {
-		domain.clearPosition(from);
-		domain.addPieceAt(this, to);
+	public Point getCurrentPosition() {
+		return currentPosition;
+	}
+	
+	abstract protected ArrayList<Point> movePossibilities();
+
+	public ArrayList<Point> validMovePossibilities() {
+		return movePossibilities();
+	}
+
+	public ArrayList<Point> attackPossibilities() {
+		return movePossibilities();
+	}
+
+	public void move(Point to) {
+		pieceBoard.clearPosition(currentPosition);
+		if(!pieceBoard.squareIsVacant(to)) {
+			final KingdomProtector pieceAtPosition = (KingdomProtector)pieceBoard.getPieceAt(to);
+			pieceAtPosition.die();
+		}
+		pieceBoard.setPieceAt(this, to);
+
+		// Muda o status 'passed' de todos os peões da mesma cor para false
+		pieceBoard.setPawnsPassedStatus(pieceColor, false);
 	}
 	
 }

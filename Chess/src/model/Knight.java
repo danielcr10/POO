@@ -3,19 +3,19 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Knight extends Piece {
+class Knight extends KingdomProtector {
 
-	public Knight(Color color) {
-		super(color);
+	public Knight(Board board, Color color) {
+		super(board, color);
 	}
 	
-	public ArrayList<Point> movePossibilities(Board domain, Point from) {
+	public ArrayList<Point> movePossibilities() {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 
-		final Point[] targetPoints = getTargetPoints(from);
+		final Point[] targetPoints = getTargetPoints();
 		for(Point p : targetPoints) {
-			if(domain.contains(p)) {
-				if(domain.squareIsVacant(p) || domain.getPieceAt(p).getColor() != pieceColor) {
+			if(pieceBoard.contains(p)) {
+				if(pieceBoard.squareIsVacant(p) || pieceBoard.getPieceAt(p).getColor() != pieceColor) {
 					possibilitiesList.add(p);
 				}
 			}
@@ -24,18 +24,23 @@ public class Knight extends Piece {
 		return possibilitiesList;
 	}
 	
-	private Point[] getTargetPoints(Point from) {
+	private Point[] getTargetPoints() {
 		final int targetPointCount = 8;
 		final Point[] targetPoints = new Point[targetPointCount];
-		targetPoints[0] = new Point(from.x - 1, from.y + 2);
-		targetPoints[1] = new Point(from.x + 1, from.y + 2);
-		targetPoints[2] = new Point(from.x + 2, from.y + 1);
-		targetPoints[3] = new Point(from.x + 2, from.y - 1);
-		targetPoints[4] = new Point(from.x + 1, from.y - 2);
-		targetPoints[5] = new Point(from.x - 1, from.y - 2);
-		targetPoints[6] = new Point(from.x - 2, from.y - 1);
-		targetPoints[7] = new Point(from.x - 2, from.y + 1);
+		targetPoints[0] = new Point(currentPosition.x - 1, currentPosition.y + 2);
+		targetPoints[1] = new Point(currentPosition.x + 1, currentPosition.y + 2);
+		targetPoints[2] = new Point(currentPosition.x + 2, currentPosition.y + 1);
+		targetPoints[3] = new Point(currentPosition.x + 2, currentPosition.y - 1);
+		targetPoints[4] = new Point(currentPosition.x + 1, currentPosition.y - 2);
+		targetPoints[5] = new Point(currentPosition.x - 1, currentPosition.y - 2);
+		targetPoints[6] = new Point(currentPosition.x - 2, currentPosition.y - 1);
+		targetPoints[7] = new Point(currentPosition.x - 2, currentPosition.y + 1);
 
 		return targetPoints;
+	}
+
+	public void die() {
+		final PieceSet set = pieceBoard.getPieceSet(pieceColor);
+		set.removeKnight(this);
 	}
 }
