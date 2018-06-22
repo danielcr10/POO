@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Rook extends Piece implements Mortal {
+class Rook extends KingdomProtector {
 	
 	private boolean moved = false;
 	

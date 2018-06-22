@@ -32,7 +32,11 @@ public abstract class Piece {
 		return currentPosition;
 	}
 	
-	abstract public ArrayList<Point> movePossibilities();
+	abstract protected ArrayList<Point> movePossibilities();
+
+	public ArrayList<Point> validMovePossibilities() {
+		return movePossibilities();
+	}
 
 	public ArrayList<Point> attackPossibilities() {
 		return movePossibilities();
@@ -41,7 +45,7 @@ public abstract class Piece {
 	public void move(Point to) {
 		pieceBoard.clearPosition(currentPosition);
 		if(!pieceBoard.squareIsVacant(to)) {
-			final Mortal pieceAtPosition = (Mortal)pieceBoard.getPieceAt(to);
+			final KingdomProtector pieceAtPosition = (KingdomProtector)pieceBoard.getPieceAt(to);
 			pieceAtPosition.die();
 		}
 		pieceBoard.setPieceAt(this, to);

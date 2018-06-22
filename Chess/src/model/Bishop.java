@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class Bishop extends Piece implements Mortal {
+class Bishop extends KingdomProtector {
 
 	public Bishop(Board board, Color color) {
 		super(board, color);

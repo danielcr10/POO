@@ -3,7 +3,7 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Pawn extends Piece implements Mortal {
+public class Pawn extends KingdomProtector {
 
 	private static final Class[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
 
