@@ -79,8 +79,8 @@ public class PieceSet {
 		queenList.add(queen);
 	}
 
-	public void addBishop(Bishop bishopList) {
-		bishopList.add(bishopList);
+	public void addBishop(Bishop bishop) {
+		bishopList.add(bishop);
 	}
 
 	public void addKnight(Knight knight) {
@@ -95,8 +95,8 @@ public class PieceSet {
 		queenList.remove(queen);
 	}
 
-	public void removeBishop(Bishop bishopList) {
-		bishopList.remove(bishopList);
+	public void removeBishop(Bishop bishop) {
+		bishopList.remove(bishop);
 	}
 
 	public void removeKnight(Knight knight) {
