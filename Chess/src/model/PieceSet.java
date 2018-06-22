@@ -55,6 +55,10 @@ public class PieceSet {
 		return king;
 	}
 
+	public ArrayList<Piece> getAll() {
+		return allPiecesList;
+	}
+
 	public ArrayList<Queen> getQueens() {
 		return queenList;
 	}
