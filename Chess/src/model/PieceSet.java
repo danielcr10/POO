@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class PieceSet {
 
+	private ArrayList<Piece> allPiecesList;
+
 	private King king;
 
 	private ArrayList<Queen> queenList = new ArrayList<>();
@@ -17,22 +19,36 @@ public class PieceSet {
 	private ArrayList<Pawn> pawnList = new ArrayList<>();
 
 	public PieceSet(Board board, Color setColor) {
+		final int bishopCount = 2;
+		final int knightCount = 2;
+		final int rookCount = 2;
+		final int pawnCount = 8;
+
 		king = new King(board, setColor);
 		queenList.add(new Queen(board, setColor));
-		bishopLists.add(new Bishop(board, setColor));
-		bishopLists.add(new Bishop(board, setColor));
-		knightList.add(new Knight(board, setColor));
-		knightList.add(new Knight(board, setColor));
-		rookList.add(new Rook(board, setColor));
-		rookList.add(new Rook(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
-		pawnList.add(new Pawn(board, setColor));
+
+		for(int i = 0; i < bishopCount; i++) {
+			bishopLists.add(new Bishop(board, setColor));
+		}
+
+		for(int i = 0; i < knightCount; i++) {
+			knightList.add(new Knight(board, setColor));
+		}
+
+		for(int i = 0; i < rookCount; i++) {
+			rookList.add(new Rook(board, setColor));
+		}
+
+		for(int i = 0; i < pawnCount; i++) {
+			pawnList.add(new Pawn(board, setColor));
+		}
+
+		allPiecesList.add(king);
+		allPiecesList.addAll(queenList);
+		allPiecesList.addAll(bishopLists);
+		allPiecesList.addAll(knightList);
+		allPiecesList.addAll(rookList);
+		allPiecesList.addAll(pawnList);
 	}
 
 	public King getKing() {
