@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class PieceSet {
 
-	private ArrayList<Piece> allPiecesList;
+	private ArrayList<Piece> allPiecesList = new ArrayList<>();
 
 	private King king;
 
