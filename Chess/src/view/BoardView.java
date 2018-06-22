@@ -1,6 +1,7 @@
 package view;
 
 import java.util.ArrayList;
+import java.awt.Component;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import java.beans.PropertyChangeEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import controller.ChessController;
 
@@ -57,6 +59,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			System.exit(1);
 		}
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
+		Component t = this;
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				final Point clickedPoint = e.getPoint();
@@ -88,8 +91,11 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						else {
 							clickedSquare = null;
 						}
-						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
 						targetPositions = null;
+						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
+						if(controller.currentPlayerIsInCheckmate()) {
+							JOptionPane.showMessageDialog(t, "Xeque-mate!");
+						}
 					}
 					else if(positionHasPiece(p)) {
 						if(controller.playerHasPermission(p)) {

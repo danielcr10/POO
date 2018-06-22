@@ -42,6 +42,10 @@ public class ChessController {
 		return chessMatch.currentPlayerIsInCheck();
 	}
 
+	public boolean currentPlayerIsInCheckmate() {
+		return chessMatch.currentPlayerIsInCheckmate();
+	}
+
 	public Point requestCurrentPlayerKingPosition() {
 		return chessMatch.getCurrentPlayerKingPosition();
 	}
