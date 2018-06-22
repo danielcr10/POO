@@ -110,7 +110,7 @@ public class Pawn extends KingdomProtector {
 		// Verifica se é um movimento de En Passant
 		else if(to.x != currentPosition.x && pieceBoard.squareIsVacant(to)) {
 			final Point p = new Point(to.x, to.y - 1 * sense);
-			final Mortal pieceAtPosition = (Mortal)pieceBoard.getPieceAt(p);
+			final KingdomProtector pieceAtPosition = (KingdomProtector)pieceBoard.getPieceAt(p);
 			pieceAtPosition.die();
 			pieceBoard.clearPosition(p);
 		}
