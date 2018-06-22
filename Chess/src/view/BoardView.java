@@ -206,7 +206,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		final double y = boardFrameSize + kingInCheckPosition.getY() * squareDimension.getHeight();
 		g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 	}
-	
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -220,7 +220,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		if(targetPositions != null) {
 			drawMovesPossibilities((Graphics2D) g);
 		}
-		
+
 		if(kingInCheckPosition != null) {
 			drawKingInCheck((Graphics2D) g);
 		}
