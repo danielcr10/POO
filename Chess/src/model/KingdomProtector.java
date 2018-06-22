@@ -20,26 +20,25 @@ public abstract class KingdomProtector extends Piece {
 
 	public ArrayList<Point> validMovePossibilities() {
 		ArrayList<Point> possibilitiesList = movePossibilities();
-		if(myKing().isInCheck()) {
-			final ArrayList<Point> safePossibilities = new ArrayList<>();
-			final Point originalPosition = getCurrentPosition();
-			for(Point position : possibilitiesList) {
-				final Piece livingPiece = pieceBoard.getPieceAt(position);
-				pieceBoard.setPieceAt(this, position);
-				if(!myKing().isInCheck()) {
-					safePossibilities.add(position);
-				}
-				pieceBoard.setPieceAt(this, originalPosition);
-				if(livingPiece != null) {
-					pieceBoard.setPieceAt(livingPiece, position);
-				}
-				else {
-					pieceBoard.clearPosition(position);
-				}
+		final ArrayList<Point> safePossibilities = new ArrayList<>();
+		final Point originalPosition = getCurrentPosition();
+		for(Point position : possibilitiesList) {
+			final Piece livingPiece = pieceBoard.getPieceAt(position);
+			pieceBoard.clearPosition(originalPosition);
+			pieceBoard.setPieceAt(this, position);
+			if(!myKing().isInCheck()) {
+				safePossibilities.add(position);
 			}
-
-			possibilitiesList = safePossibilities;
+			pieceBoard.setPieceAt(this, originalPosition);
+			if(livingPiece != null) {
+				pieceBoard.setPieceAt(livingPiece, position);
+			}
+			else {
+				pieceBoard.clearPosition(position);
+			}
 		}
+
+		possibilitiesList = safePossibilities;
 
 		return possibilitiesList;
 	}
