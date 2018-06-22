@@ -113,6 +113,22 @@ public class Match {
 		return currentPlayerKing.isInCheck();
 	}
 
+	public boolean currentPlayerIsInCheckmate() {
+		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
+		final King currentPlayerKing = set.getKing();
+		if(!currentPlayerKing.isInCheck()) {
+			return false;
+		}
+
+		for(Piece piece : set.getAll()) {
+			if(piece.validMovePossibilities().size() > 0) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	public Point getCurrentPlayerKingPosition() {
 		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
 		final King currentPlayerKing = set.getKing();
