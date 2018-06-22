@@ -10,7 +10,7 @@ public class PieceSet {
 
 	private ArrayList<Queen> queenList = new ArrayList<>();
 
-	private ArrayList<Bishop> bishopLists = new ArrayList<>();
+	private ArrayList<Bishop> bishopList = new ArrayList<>();
 
 	private ArrayList<Knight> knightList = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class PieceSet {
 		queenList.add(new Queen(board, setColor));
 
 		for(int i = 0; i < bishopCount; i++) {
-			bishopLists.add(new Bishop(board, setColor));
+			bishopList.add(new Bishop(board, setColor));
 		}
 
 		for(int i = 0; i < knightCount; i++) {
@@ -45,7 +45,7 @@ public class PieceSet {
 
 		allPiecesList.add(king);
 		allPiecesList.addAll(queenList);
-		allPiecesList.addAll(bishopLists);
+		allPiecesList.addAll(bishopList);
 		allPiecesList.addAll(knightList);
 		allPiecesList.addAll(rookList);
 		allPiecesList.addAll(pawnList);
@@ -60,7 +60,7 @@ public class PieceSet {
 	}
 
 	public ArrayList<Bishop> getBishops() {
-		return bishopLists;
+		return bishopList;
 	}
 
 	public ArrayList<Knight> getKnights() {
@@ -80,7 +80,7 @@ public class PieceSet {
 	}
 
 	public void addBishop(Bishop bishopList) {
-		bishopLists.add(bishopList);
+		bishopList.add(bishopList);
 	}
 
 	public void addKnight(Knight knight) {
@@ -96,7 +96,7 @@ public class PieceSet {
 	}
 
 	public void removeBishop(Bishop bishopList) {
-		bishopLists.remove(bishopList);
+		bishopList.remove(bishopList);
 	}
 
 	public void removeKnight(Knight knight) {
