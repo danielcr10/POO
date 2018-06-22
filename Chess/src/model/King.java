@@ -15,6 +15,10 @@ class King extends Piece {
 		super(board, color);
 	}
 
+	public boolean isInCheck() {
+		return pieceBoard.pieceIsVulnerableAt(this, getCurrentPosition());
+	}
+
 	public ArrayList<Point> movePossibilities() {
 		final ArrayList<Point> possibilitiesList = new ArrayList<>();
 		for (Point p : getTargetPositions()) {
