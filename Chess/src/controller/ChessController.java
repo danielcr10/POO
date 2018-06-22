@@ -38,6 +38,14 @@ public class ChessController {
 		return chessMatch.getPieceColorAt(p) == chessMatch.getCurrentPlayer();
 	}
 
+	public boolean currentPlayerIsInCheck() {
+		return chessMatch.currentPlayerIsInCheck();
+	}
+
+	public Point requestCurrentPlayerKingPosition() {
+		return chessMatch.getCurrentPlayerKingPosition();
+	}
+
 	public void requestPieceMove(Point from, Point to) {
 		try {
 			if(!playerHasPermission(from)) {

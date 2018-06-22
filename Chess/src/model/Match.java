@@ -106,6 +106,20 @@ public class Match {
 		return currentPlayer;
 	}
 
+	public boolean currentPlayerIsInCheck() {
+		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
+		final King currentPlayerKing = set.getKing();
+
+		return currentPlayerKing.isInCheck();
+	}
+
+	public Point getCurrentPlayerKingPosition() {
+		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
+		final King currentPlayerKing = set.getKing();
+
+		return currentPlayerKing.getCurrentPosition();
+	}
+
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		this.pcs.addPropertyChangeListener(listener);
 	}

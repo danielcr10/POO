@@ -47,6 +47,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	Point promotionPosition;
 
+	Point kingInCheckPosition;
+
 	public BoardView(ChessController controller) {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -86,6 +88,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						else {
 							clickedSquare = null;
 						}
+						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
 						targetPositions = null;
 					}
 					else if(positionHasPiece(p)) {
