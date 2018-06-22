@@ -77,38 +77,47 @@ public class PieceSet {
 
 	public void addQueen(Queen queen) {
 		queenList.add(queen);
+		allPiecesList.add(queen);
 	}
 
 	public void addBishop(Bishop bishop) {
 		bishopList.add(bishop);
+		allPiecesList.add(bishop);
 	}
 
 	public void addKnight(Knight knight) {
 		knightList.add(knight);
+		allPiecesList.add(knight);
 	}
 
 	public void addRook(Rook rook) {
 		rookList.add(rook);
+		allPiecesList.add(rook);
 	}
 
 	public void removeQueen(Queen queen) {
 		queenList.remove(queen);
+		allPiecesList.remove(queen);
 	}
 
 	public void removeBishop(Bishop bishop) {
 		bishopList.remove(bishop);
+		allPiecesList.remove(bishop);
 	}
 
 	public void removeKnight(Knight knight) {
 		knightList.remove(knight);
+		allPiecesList.remove(knight);
 	}
 
 	public void removeRook(Rook rook) {
 		rookList.remove(rook);
+		allPiecesList.remove(rook);
 	}
 
 	public void removePawn(Pawn pawn) {
 		pawnList.remove(pawn);
+		allPiecesList.remove(pawn);
 	}
 
 }
