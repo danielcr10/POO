@@ -33,7 +33,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	private static final double boardFrameSize = 61;
 	private static final int dimension = 8;
 	
-	Image boardFrameImage;
+	private static Image boardFrameImage;
 	
 	String[][] pieces;
 	
@@ -51,15 +51,17 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	Point kingInCheckPosition;
 
-	public BoardView(ChessController controller) {
+	static {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
 		} catch(IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
+	}
+
+	public BoardView(ChessController controller) {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
-		Component t = this;
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				final Point clickedPoint = e.getPoint();
@@ -92,10 +94,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 							clickedSquare = null;
 						}
 						targetPositions = null;
-						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
-						if(controller.currentPlayerIsInCheckmate()) {
-							JOptionPane.showMessageDialog(t, "Xeque-mate!");
-						}
 					}
 					else if(positionHasPiece(p)) {
 						if(controller.playerHasPermission(p)) {
@@ -212,7 +210,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		final double y = boardFrameSize + kingInCheckPosition.getY() * squareDimension.getHeight();
 		g.fill(new Rectangle2D.Double(x, y, squareDimension.getWidth(), squareDimension.getHeight()));
 	}
-	
+
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -226,7 +224,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		if(targetPositions != null) {
 			drawMovesPossibilities((Graphics2D) g);
 		}
-		
+
 		if(kingInCheckPosition != null) {
 			drawKingInCheck((Graphics2D) g);
 		}
@@ -237,6 +235,22 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent e) {
 		if(e.getPropertyName() == "board") {
 			pieces = (String[][])e.getNewValue();
+			final String status = controller.requestMatchStatus();
+			if(status != "PLAYING") {
+				if(status == "CHECK") {
+					kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+				}
+				else if(status == "CHECKMATE") {
+					kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+					JOptionPane.showMessageDialog(this, "Xeque-mate!");
+				}
+				else if(status == "STALEMATE") {
+					JOptionPane.showMessageDialog(this, "Empate!");
+				}
+			}
+			else {
+				kingInCheckPosition = null;
+			}
 			repaint();
 		}
 	}

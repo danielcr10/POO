@@ -45,15 +45,6 @@ public class ChessController {
 		return chessMatch.getPieceColorAt(p) == chessMatch.getCurrentPlayer();
 	}
 
-	public boolean currentPlayerIsInCheck() {
-		saveGame();
-		return chessMatch.currentPlayerIsInCheck();
-	}
-
-	public boolean currentPlayerIsInCheckmate() {
-		return chessMatch.currentPlayerIsInCheckmate();
-	}
-
 	public Point requestCurrentPlayerKingPosition() {
 		return chessMatch.getCurrentPlayerKingPosition();
 	}
@@ -68,7 +59,6 @@ public class ChessController {
 		} catch(PlayerPermissionException e) {
 			System.out.println(e.getMessage());
 		}
-
 	}
 
 	public void requestPawnPromotionAt(Point position, String piece) {
@@ -103,6 +93,10 @@ public class ChessController {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String requestMatchStatus() {
+		return chessMatch.getMatchStatus();
 	}
 
 }

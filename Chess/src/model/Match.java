@@ -25,6 +25,10 @@ class InvalidPromotionException extends Exception {
 
 }
 
+enum Status {
+	PLAYING, CHECK, CHECKMATE, STALEMATE;
+}
+
 public class Match implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -35,6 +39,8 @@ public class Match implements Serializable {
 
 	private Color currentPlayer = Color.WHITE;
 
+	private Status status = Status.PLAYING;
+
 	public void movePieceFromTo(Point from, Point to) {
 		try {
 			final Piece pieceAtPosition = matchBoard.getPieceAt(from);
@@ -43,14 +49,15 @@ public class Match implements Serializable {
 			}
 			final String[][] boardBefore = getBoardState();
 			pieceAtPosition.move(to);
+			// TODO: Melhorar a forma como fazemos essa conversão.
+			currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
+			verifyMatchStatus();
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidMoveException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
-		// TODO: Melhorar a forma como fazemos essa conversão.
-		currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
 	}
 
 	public void promotePawnAt(Point position, String piece) {
@@ -61,6 +68,7 @@ public class Match implements Serializable {
 			}
 			final String[][] boardBefore = getBoardState();
 			matchBoard.setPieceAt(createPieceFromString(piece, pieceAtPosition.getColor()), position);
+			verifyMatchStatus();
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidPromotionException e) {
@@ -109,14 +117,35 @@ public class Match implements Serializable {
 		return currentPlayer;
 	}
 
-	public boolean currentPlayerIsInCheck() {
+	public String getMatchStatus() {
+		return status.toString();
+	}
+
+	private boolean matchIsFreezed() {
+		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
+		final King currentPlayerKing = set.getKing();
+
+		if(currentPlayerKing.isInCheck()) {
+			return false;
+		}
+
+		for(Piece piece : set.getAll()) {
+			if(piece.validMovePossibilities().size() > 0) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean currentPlayerIsInCheck() {
 		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
 		final King currentPlayerKing = set.getKing();
 
 		return currentPlayerKing.isInCheck();
 	}
 
-	public boolean currentPlayerIsInCheckmate() {
+	private boolean currentPlayerIsInCheckmate() {
 		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
 		final King currentPlayerKing = set.getKing();
 		if(!currentPlayerKing.isInCheck()) {
@@ -130,6 +159,23 @@ public class Match implements Serializable {
 		}
 
 		return true;
+	}
+
+	private void verifyMatchStatus() {
+		if(currentPlayerIsInCheck()) {
+			if(currentPlayerIsInCheckmate()) {
+				status = Status.CHECKMATE;
+			}
+			else {
+				status = Status.CHECK;
+			}
+		}
+		else if(matchIsFreezed()) {
+			status = Status.STALEMATE;
+		}
+		else {
+			status = Status.PLAYING;
+		}
 	}
 
 	public Point getCurrentPlayerKingPosition() {

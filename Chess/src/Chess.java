@@ -2,6 +2,7 @@ import javax.swing.SwingUtilities;
 
 import model.Match;
 import view.BoardView;
+import view.InitialView;
 import view.MainWindow;
 import controller.ChessController;
 
@@ -13,10 +14,9 @@ class Chess implements Runnable {
 	}
 	
 	public void run() {
-		Match chessMatch = new Match();
-		ChessController controller = new ChessController(chessMatch);
-		BoardView boardView = new BoardView(controller);
-		chessMatch.addPropertyChangeListener(boardView);
-		new MainWindow(boardView);
+		final Match chessMatch = new Match();
+		final ChessController controller = new ChessController(chessMatch);
+		final MainWindow mainWindow = new MainWindow(controller);
+		chessMatch.addPropertyChangeListener(mainWindow.getBoardView());
 	}
 }
