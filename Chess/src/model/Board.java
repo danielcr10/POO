@@ -97,21 +97,24 @@ class Board {
 		boolean isVunerable = false;
 		final Piece livingPiece = getPieceAt(position);
 		final Point piecePosition = piece.getCurrentPosition();
-		final Color oppositeColor = piece.getColor() == Color.WHITE ? Color.BLACK : Color.WHITE;
-		final PieceSet set = getPieceSet(oppositeColor);
-		final ArrayList<Piece> enemyPieces = set.getAll();
-
 		setPieceAt(piece, position);
-		for(Piece pieceAtPosition : enemyPieces) {
-			if(pieceAtPosition.attackPossibilities().contains(position)) {
-				isVunerable = true;
-				break;
+
+		for(int i = 0; i < Board.dimension; i++) {
+			for(int j = 0; j < Board.dimension; j++) {
+				final Point p = new Point(j, i);
+				final Piece pieceAtPosition = getPieceAt(p);
+				if(pieceAtPosition != null && pieceAtPosition.getColor() != piece.getColor() && pieceAtPosition.attackPossibilities().contains(position)) {
+					isVunerable = true;
+					break;
+				}
 			}
 		}
+
 		clearPosition(position);
 		if(livingPiece != null) {
 			setPieceAt(livingPiece, position);
 		}
+
 		setPieceAt(piece, piecePosition);
 
 		return isVunerable;
