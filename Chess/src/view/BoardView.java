@@ -83,6 +83,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						}
 					}
 					else if(targetPositions != null && targetPositions.contains(p) && promotionPosition == null) {
+						targetPositions = null;
 						controller.requestPieceMove(clickedSquare, p);
 						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
 							promotionPosition = new Point(j, i);
@@ -93,7 +94,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						else {
 							clickedSquare = null;
 						}
-						targetPositions = null;
 					}
 					else if(positionHasPiece(p)) {
 						if(controller.playerHasPermission(p)) {
@@ -235,6 +235,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent e) {
 		if(e.getPropertyName() == "board") {
 			pieces = (String[][])e.getNewValue();
+			repaint();
 			final String status = controller.requestMatchStatus();
 			if(status != "PLAYING") {
 				if(status == "CHECK") {
@@ -247,11 +248,11 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 				else if(status == "STALEMATE") {
 					JOptionPane.showMessageDialog(this, "Empate!");
 				}
+				repaint();
 			}
 			else {
 				kingInCheckPosition = null;
 			}
-			repaint();
 		}
 	}
 }
