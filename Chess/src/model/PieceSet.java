@@ -1,8 +1,10 @@
 package model;
 
+import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PieceSet {
+public class PieceSet implements Serializable {
 
 	private ArrayList<Piece> allPiecesList = new ArrayList<>();
 
@@ -17,6 +19,8 @@ public class PieceSet {
 	private ArrayList<Rook> rookList = new ArrayList<>();
 
 	private ArrayList<Pawn> pawnList = new ArrayList<>();
+
+	private static final long serialVersionUID = 1L;
 
 	public PieceSet(Board board, Color setColor) {
 		final int bishopCount = 2;

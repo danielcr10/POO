@@ -2,8 +2,11 @@ package model;
 
 import java.util.ArrayList;
 import java.awt.Point;
+import java.io.Serializable;
 
-public abstract class Piece {
+public abstract class Piece implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	protected Board pieceBoard;
 

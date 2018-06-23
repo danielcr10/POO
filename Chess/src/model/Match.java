@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.awt.Point;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
+import java.io.Serializable;
 
 @SuppressWarnings("serial")
 class InvalidMoveException extends Exception {
@@ -24,9 +25,11 @@ class InvalidPromotionException extends Exception {
 
 }
 
-public class Match {
+public class Match implements Serializable {
 	
-	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private static final long serialVersionUID = 1L;
+
+	private final transient PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
 	private Board matchBoard = new Board();
 

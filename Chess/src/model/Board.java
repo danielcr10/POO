@@ -3,14 +3,17 @@ package model;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.awt.Point;
+import java.io.Serializable;
 
-class Board {
-	
+class Board implements Serializable {
+
 	static public final int dimension = 8;
 
 	private Piece[][] board = new Piece[dimension][dimension];
 
 	private HashMap<Color, PieceSet> pieceSet = new HashMap<Color, PieceSet>();
+
+	private static final long serialVersionUID = 1L;
 
 	public Board() {
 		final PieceSet blackPieces = new PieceSet(this, Color.BLACK);
