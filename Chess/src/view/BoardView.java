@@ -33,7 +33,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	private static final double boardFrameSize = 61;
 	private static final int dimension = 8;
 	
-	Image boardFrameImage;
+	private static Image boardFrameImage;
 	
 	String[][] pieces;
 	
@@ -51,13 +51,16 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	Point kingInCheckPosition;
 
-	public BoardView(ChessController controller) {
+	static {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
 		} catch(IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
+	}
+
+	public BoardView(ChessController controller) {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
 		Component t = this;
 		addMouseListener(new MouseAdapter() {
