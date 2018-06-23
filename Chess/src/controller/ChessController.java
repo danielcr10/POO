@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.awt.Point;
 import model.Match;
 import model.Pawn;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.File;
 
 @SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
@@ -39,6 +46,7 @@ public class ChessController {
 	}
 
 	public boolean currentPlayerIsInCheck() {
+		saveGame();
 		return chessMatch.currentPlayerIsInCheck();
 	}
 
@@ -65,6 +73,36 @@ public class ChessController {
 
 	public void requestPawnPromotionAt(Point position, String piece) {
 		chessMatch.promotePawnAt(position, piece);
+	}
+
+	public void saveGame() {
+		try {
+			FileOutputStream fos = new FileOutputStream("matches"+File.separator+"save.txt");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(chessMatch);
+			oos.close();
+		}catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void continueGame() {
+		try {
+			FileInputStream file = new FileInputStream("matches"+File.separator+"save.txt");
+			ObjectInputStream object = new ObjectInputStream(file);
+			chessMatch = (Match) object.readObject();
+			object.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
