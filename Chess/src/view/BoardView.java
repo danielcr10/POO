@@ -84,7 +84,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						}
 					}
 					else if(targetPositions != null && targetPositions.contains(p) && promotionPosition == null) {
-						controller.requestPieceMove(clickedSquare, p);
+						final String status = controller.requestPieceMove(clickedSquare, p);
 						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
 							promotionPosition = new Point(j, i);
 							clickedSquare = promotionPosition;
@@ -95,9 +95,20 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 							clickedSquare = null;
 						}
 						targetPositions = null;
-						kingInCheckPosition = controller.currentPlayerIsInCheck() ? controller.requestCurrentPlayerKingPosition() : null;
-						if(controller.currentPlayerIsInCheckmate()) {
-							JOptionPane.showMessageDialog(t, "Xeque-mate!");
+						if(status != "PLAYING") {
+							if(status == "CHECK") {
+								kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+							}
+							else if(status == "CHECKMATE") {
+								kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+								JOptionPane.showMessageDialog(t, "Xeque-mate!");
+							}
+							else if(status == "FREEZED") {
+								JOptionPane.showMessageDialog(t, "Congelamento!");
+							}
+						}
+						else {
+							kingInCheckPosition = null;
 						}
 					}
 					else if(positionHasPiece(p)) {

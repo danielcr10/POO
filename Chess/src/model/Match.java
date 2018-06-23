@@ -24,6 +24,10 @@ class InvalidPromotionException extends Exception {
 
 }
 
+enum Status {
+	PLAYING, CHECK, CHECKMATE, FREEZED;
+}
+
 public class Match {
 	
 	private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
@@ -31,6 +35,8 @@ public class Match {
 	private Board matchBoard = new Board();
 
 	private Color currentPlayer = Color.WHITE;
+
+	private Status status;
 
 	public void movePieceFromTo(Point from, Point to) {
 		try {
@@ -48,6 +54,7 @@ public class Match {
 		}
 		// TODO: Melhorar a forma como fazemos essa conversão.
 		currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
+		verifyMatchStatus();
 	}
 
 	public void promotePawnAt(Point position, String piece) {
@@ -106,14 +113,35 @@ public class Match {
 		return currentPlayer;
 	}
 
-	public boolean currentPlayerIsInCheck() {
+	public String getMatchStatus() {
+		return status.toString();
+	}
+
+	private boolean matchIsFreezed() {
+		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
+		final King currentPlayerKing = set.getKing();
+
+		if(currentPlayerKing.isInCheck()) {
+			return false;
+		}
+
+		for(Piece piece : set.getAll()) {
+			if(piece.validMovePossibilities().size() > 0) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean currentPlayerIsInCheck() {
 		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
 		final King currentPlayerKing = set.getKing();
 
 		return currentPlayerKing.isInCheck();
 	}
 
-	public boolean currentPlayerIsInCheckmate() {
+	private boolean currentPlayerIsInCheckmate() {
 		final PieceSet set = matchBoard.getPieceSet(currentPlayer);
 		final King currentPlayerKing = set.getKing();
 		if(!currentPlayerKing.isInCheck()) {
@@ -127,6 +155,23 @@ public class Match {
 		}
 
 		return true;
+	}
+
+	private void verifyMatchStatus() {
+		if(currentPlayerIsInCheck()) {
+			if(currentPlayerIsInCheckmate()) {
+				status = Status.CHECKMATE;
+			}
+			else {
+				status = Status.CHECK;
+			}
+		}
+		else if(matchIsFreezed()) {
+			status = Status.FREEZED;
+		}
+		else {
+			status = Status.PLAYING;
+		}
 	}
 
 	public Point getCurrentPlayerKingPosition() {
