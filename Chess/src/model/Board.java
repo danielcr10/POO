@@ -97,6 +97,7 @@ class Board {
 		boolean isVunerable = false;
 		final Piece livingPiece = getPieceAt(position);
 		final Point piecePosition = piece.getCurrentPosition();
+		clearPosition(piecePosition);
 		setPieceAt(piece, position);
 
 		for(int i = 0; i < Board.dimension; i++) {
