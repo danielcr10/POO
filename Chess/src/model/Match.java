@@ -46,15 +46,15 @@ public class Match {
 			}
 			final String[][] boardBefore = getBoardState();
 			pieceAtPosition.move(to);
+			// TODO: Melhorar a forma como fazemos essa conversão.
+			currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
+			verifyMatchStatus();
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidMoveException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
-		// TODO: Melhorar a forma como fazemos essa conversão.
-		currentPlayer = currentPlayer == Color.WHITE ? Color.BLACK : Color.WHITE;
-		verifyMatchStatus();
 	}
 
 	public void promotePawnAt(Point position, String piece) {
@@ -65,6 +65,7 @@ public class Match {
 			}
 			final String[][] boardBefore = getBoardState();
 			matchBoard.setPieceAt(createPieceFromString(piece, pieceAtPosition.getColor()), position);
+			verifyMatchStatus();
 			final String[][] boardAfter = getBoardState();
 			pcs.firePropertyChange("board", boardBefore, boardAfter);
 		} catch(InvalidPromotionException e) {

@@ -42,22 +42,24 @@ public class ChessController {
 		return chessMatch.getCurrentPlayerKingPosition();
 	}
 
-	public String requestPieceMove(Point from, Point to) {
+	public void requestPieceMove(Point from, Point to) {
 		try {
 			if(!playerHasPermission(from)) {
 				final String message = "PlayerPermissionException: This player cannot make a move now. It's the opponent's turn.";
 				throw new PlayerPermissionException(message);
 			}
+			chessMatch.movePieceFromTo(from, to);
 		} catch(PlayerPermissionException e) {
 			System.out.println(e.getMessage());
 		}
-		chessMatch.movePieceFromTo(from, to);
-
-		return chessMatch.getMatchStatus();
 	}
 
 	public void requestPawnPromotionAt(Point position, String piece) {
 		chessMatch.promotePawnAt(position, piece);
+	}
+
+	public String requestMatchStatus() {
+		return chessMatch.getMatchStatus();
 	}
 
 }

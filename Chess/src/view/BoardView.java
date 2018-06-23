@@ -62,7 +62,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	public BoardView(ChessController controller) {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
-		Component t = this;
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				final Point clickedPoint = e.getPoint();
@@ -84,7 +83,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 						}
 					}
 					else if(targetPositions != null && targetPositions.contains(p) && promotionPosition == null) {
-						final String status = controller.requestPieceMove(clickedSquare, p);
+						controller.requestPieceMove(clickedSquare, p);
 						if(pieces[i][j].contains("Pawn") && (i == 0 || i == dimension - 1)) {
 							promotionPosition = new Point(j, i);
 							clickedSquare = promotionPosition;
@@ -95,21 +94,6 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 							clickedSquare = null;
 						}
 						targetPositions = null;
-						if(status != "PLAYING") {
-							if(status == "CHECK") {
-								kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
-							}
-							else if(status == "CHECKMATE") {
-								kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
-								JOptionPane.showMessageDialog(t, "Xeque-mate!");
-							}
-							else if(status == "STALEMATE") {
-								JOptionPane.showMessageDialog(t, "Empate!");
-							}
-						}
-						else {
-							kingInCheckPosition = null;
-						}
 					}
 					else if(positionHasPiece(p)) {
 						if(controller.playerHasPermission(p)) {
@@ -251,6 +235,22 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 	public void propertyChange(PropertyChangeEvent e) {
 		if(e.getPropertyName() == "board") {
 			pieces = (String[][])e.getNewValue();
+			final String status = controller.requestMatchStatus();
+			if(status != "PLAYING") {
+				if(status == "CHECK") {
+					kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+				}
+				else if(status == "CHECKMATE") {
+					kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
+					JOptionPane.showMessageDialog(this, "Xeque-mate!");
+				}
+				else if(status == "STALEMATE") {
+					JOptionPane.showMessageDialog(this, "Empate!");
+				}
+			}
+			else {
+				kingInCheckPosition = null;
+			}
 			repaint();
 		}
 	}
