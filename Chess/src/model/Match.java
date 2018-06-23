@@ -36,7 +36,7 @@ public class Match {
 
 	private Color currentPlayer = Color.WHITE;
 
-	private Status status;
+	private Status status = Status.PLAYING;
 
 	public void movePieceFromTo(Point from, Point to) {
 		try {
