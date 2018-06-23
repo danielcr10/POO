@@ -103,8 +103,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 								kingInCheckPosition = controller.requestCurrentPlayerKingPosition();
 								JOptionPane.showMessageDialog(t, "Xeque-mate!");
 							}
-							else if(status == "FREEZED") {
-								JOptionPane.showMessageDialog(t, "Congelamento!");
+							else if(status == "STALEMATE") {
+								JOptionPane.showMessageDialog(t, "Empate!");
 							}
 						}
 						else {

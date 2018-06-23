@@ -25,7 +25,7 @@ class InvalidPromotionException extends Exception {
 }
 
 enum Status {
-	PLAYING, CHECK, CHECKMATE, FREEZED;
+	PLAYING, CHECK, CHECKMATE, STALEMATE;
 }
 
 public class Match {
@@ -167,7 +167,7 @@ public class Match {
 			}
 		}
 		else if(matchIsFreezed()) {
-			status = Status.FREEZED;
+			status = Status.STALEMATE;
 		}
 		else {
 			status = Status.PLAYING;
