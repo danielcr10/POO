@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 class King extends Piece {
 
+	private static final long serialVersionUID = 1L;
+
 	private boolean moved = false;
 
 	public void setMoved(boolean moved) {

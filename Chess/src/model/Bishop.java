@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 class Bishop extends KingdomProtector {
 
+	private static final long serialVersionUID = 1L;
+
 	public Bishop(Board board, Color color) {
 		super(board, color);
 	}
