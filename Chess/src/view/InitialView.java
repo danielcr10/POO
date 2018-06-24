@@ -30,8 +30,7 @@ public class InitialView extends JPanel {
 		final JButton loadGameButton = new JButton("Load Game");
 		layoutButtons(newGameButton, loadGameButton);
 		newGameButton.addActionListener(listener);
-		// Enquanto o Daneil acaba de fazer a leitura do jogo salvo.
-		loadGameButton.setEnabled(false);
+		loadGameButton.addActionListener(listener);
 		add(newGameButton);
 		add(loadGameButton);
 		setLayout(null);
