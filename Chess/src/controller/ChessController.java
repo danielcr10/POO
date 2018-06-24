@@ -70,9 +70,9 @@ public class ChessController {
 		chessMatch.promotePawnAt(position, piece);
 	}
 
-	public void saveGame() {
+	public void saveGame(String path) {
 		try {
-			FileOutputStream fos = new FileOutputStream("matches" + File.separator + "save.txt");
+			FileOutputStream fos = new FileOutputStream(path);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(chessMatch);
 			oos.close();

@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 
 import controller.ChessController;
 
@@ -128,7 +129,14 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		JMenuItem item = new JMenuItem("Save");
 		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveGame();
+				final File dir = new File("matches");
+				final JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(dir);
+				final int returnState = fileChooser.showSaveDialog(null);
+				if(returnState == JFileChooser.APPROVE_OPTION) {
+					final String filename = fileChooser.getSelectedFile().getAbsolutePath();
+					controller.saveGame(filename);
+				}
 			}
 		});
 		popupMenu.add(item);
