@@ -3,6 +3,7 @@ package view;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
@@ -16,8 +17,11 @@ public class MainWindow implements ActionListener {
 	private InitialView initialView;
 
 	private BoardView boardView;
+
+	private ChessController controller;
 	
 	public MainWindow(ChessController controller) {
+		setController(controller);
 		frame = new JFrame("Chess");
 		initialView = new InitialView(this);
 		boardView = new BoardView(controller);
@@ -37,12 +41,30 @@ public class MainWindow implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		final JPanel cards = (JPanel)frame.getContentPane();
-		final CardLayout layout = (CardLayout)cards.getLayout();
-		layout.next(cards);
-		adjustSize(boardView);
+		if(e.getActionCommand() == "New Game") {
+			final JPanel cards = (JPanel)frame.getContentPane();
+			final CardLayout layout = (CardLayout)cards.getLayout();
+			layout.next(cards);
+			adjustSize(boardView);
+		}
+		else {
+			File dir = new File("matches");
+			JFileChooser file = new JFileChooser() ;
+			file.setCurrentDirectory(dir);
+			file.showOpenDialog(null);
+			String fileDir = file.getSelectedFile().getAbsolutePath();
+			controller.continueGame(fileDir);
+			boardView.refreshBoard();
+			final JPanel cards = (JPanel)frame.getContentPane();
+			final CardLayout layout = (CardLayout)cards.getLayout();
+			layout.next(cards);
+			adjustSize(boardView);
+		}
 	}
-	
+
+	private void setController(ChessController c) {
+		controller = c;
+	}
 	private void adjustSize(JPanel panel) {
 		final int widthMargin = 0;
 		final int heightMargin = 22;
