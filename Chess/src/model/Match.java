@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.awt.Point;
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;

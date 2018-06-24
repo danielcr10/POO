@@ -12,6 +12,7 @@ import javax.swing.JButton;
 
 public class InitialView extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private static final String imagesPath = "images";
 	private static Image backgroundImage;
 

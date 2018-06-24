@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 class Knight extends KingdomProtector {
 
+	private static final long serialVersionUID = 1L;
+
 	public Knight(Board board, Color color) {
 		super(board, color);
 	}
