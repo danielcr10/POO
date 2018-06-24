@@ -2,7 +2,6 @@ package view;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
-import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -15,12 +14,9 @@ public class PromotionChooser {
 
 	private BoardView parent;
 
-	private ChessController controller;
-
 	private Point pawnPosition;
 
 	public PromotionChooser(BoardView parent, ChessController controller) {
-		this.controller = controller;
 		this.parent = parent;
 		for(String label : controller.getPawnPromotionPossibilities()) {
 			final JMenuItem item = new JMenuItem(label);
