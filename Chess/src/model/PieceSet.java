@@ -4,8 +4,9 @@ import java.io.Serializable;
 //import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
 public class PieceSet implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Piece> allPiecesList = new ArrayList<>();
 

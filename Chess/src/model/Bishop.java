@@ -3,8 +3,9 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
 class Bishop extends KingdomProtector {
+
+	private static final long serialVersionUID = 1L;
 
 	public Bishop(Board board, Color color) {
 		super(board, color);

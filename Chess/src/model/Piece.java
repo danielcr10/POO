@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.awt.Point;
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
 public abstract class Piece implements Serializable {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	protected Board pieceBoard;
 
 	protected Color pieceColor;

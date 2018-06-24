@@ -5,8 +5,9 @@ import java.util.ArrayList;
 import java.awt.Point;
 import java.io.Serializable;
 
-@SuppressWarnings("serial")
 class Board implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	static public final int dimension = 8;
 
