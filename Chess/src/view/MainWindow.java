@@ -56,15 +56,17 @@ public class MainWindow implements ActionListener {
 			File dir = new File("matches");
 			JFileChooser file = new JFileChooser() ;
 			file.setCurrentDirectory(dir);
-			file.showOpenDialog(null);
-			String fileDir = file.getSelectedFile().getAbsolutePath();
-			controller.continueGame(fileDir);
-			controller.addModelListener(boardView);
-			boardView.refreshBoard();
-			final JPanel cards = (JPanel)frame.getContentPane();
-			final CardLayout layout = (CardLayout)cards.getLayout();
-			layout.next(cards);
-			adjustSize(boardView);
+			final int returnState = file.showOpenDialog(null);
+			if(returnState == JFileChooser.APPROVE_OPTION) {
+				String fileDir = file.getSelectedFile().getAbsolutePath();
+				controller.continueGame(fileDir);
+				controller.addModelListener(boardView);
+				boardView.refreshBoard();
+				final JPanel cards = (JPanel)frame.getContentPane();
+				final CardLayout layout = (CardLayout)cards.getLayout();
+				layout.next(cards);
+				adjustSize(boardView);
+			}
 		}
 	}
 
