@@ -67,7 +67,7 @@ public class ChessController {
 
 	public void saveGame() {
 		try {
-			FileOutputStream fos = new FileOutputStream("matches"+File.separator+"save.txt");
+			FileOutputStream fos = new FileOutputStream("matches" + File.separator + "save.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(chessMatch);
 			oos.close();
@@ -80,9 +80,9 @@ public class ChessController {
 		}
 	}
 
-	public void continueGame() {
+	public void continueGame(String path) {
 		try {
-			FileInputStream file = new FileInputStream("matches"+File.separator+"save.txt");
+			FileInputStream file = new FileInputStream(path);
 			ObjectInputStream object = new ObjectInputStream(file);
 			chessMatch = (Match) object.readObject();
 			object.close();
