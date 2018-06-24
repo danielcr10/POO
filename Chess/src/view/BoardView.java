@@ -1,7 +1,6 @@
 package view;
 
 import java.util.ArrayList;
-import java.awt.Component;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -20,7 +21,10 @@ import java.beans.PropertyChangeEvent;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
 
 import controller.ChessController;
 
@@ -68,6 +72,11 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			public void mouseClicked(MouseEvent e) {
 				final Point clickedPoint = e.getPoint();
 				if(boardContainsPoint(clickedPoint)) {
+					if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
+						JPopupMenu popupMenu = new JPopupMenu();
+						saveOption(popupMenu);
+						openMenu(clickedPoint, popupMenu);
+					}
 					Dimension squareDimension = getSquareDimension();
 					int i = (int)((clickedPoint.getY() - boardFrameSize) / squareDimension.getHeight());
 					int j = (int)((clickedPoint.getX() - boardFrameSize) / squareDimension.getWidth());
@@ -117,6 +126,27 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	public void refreshBoard() {
 		this.pieces = controller.getBoard();
+	}
+
+	private void saveOption(JPopupMenu popupMenu) {
+		JMenuItem item = new JMenuItem("Save");
+		item.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				final File dir = new File("matches");
+				final JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(dir);
+				final int returnState = fileChooser.showSaveDialog(null);
+				if(returnState == JFileChooser.APPROVE_OPTION) {
+					final String filename = fileChooser.getSelectedFile().getAbsolutePath();
+					controller.saveGame(filename);
+				}
+			}
+		});
+		popupMenu.add(item);
+	}
+
+	private void openMenu(Point where, JPopupMenu popupMenu) {
+		popupMenu.show(this, where.x, where.y);
 	}
 
 	private boolean positionHasPiece(Point p) {
