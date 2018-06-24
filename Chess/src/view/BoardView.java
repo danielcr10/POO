@@ -72,7 +72,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			public void mouseClicked(MouseEvent e) {
 				final Point clickedPoint = e.getPoint();
 				if(boardContainsPoint(clickedPoint)) {
-					if ((e.getModifiers() & MouseEvent.BUTTON3_MASK) != 0) {
+					if (e.isMetaDown()) {
 						JPopupMenu popupMenu = new JPopupMenu();
 						saveOption(popupMenu);
 						openMenu(clickedPoint, popupMenu);
