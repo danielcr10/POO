@@ -24,20 +24,25 @@ public class MainWindow implements ActionListener {
 		setController(controller);
 		frame = new JFrame("Chess");
 		initialView = new InitialView(this);
-		boardView = new BoardView(controller);
+		boardView = new BoardView(this, controller);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		final JPanel cards = new JPanel(new CardLayout());
 		cards.add(initialView, 0);
 		cards.add(boardView, 1);
-		final CardLayout layout = (CardLayout)cards.getLayout();
-		layout.first(cards);
-		adjustSize(initialView);
 		frame.setContentPane(cards);
+		showInitialView();
 		frame.setVisible(true);
 	}
 
 	public BoardView getBoardView() {
 		return boardView;
+	}
+
+	public void showInitialView() {
+		final JPanel cards = (JPanel)frame.getContentPane();
+		final CardLayout layout = (CardLayout)cards.getLayout();
+		layout.first(cards);
+		adjustSize(initialView);
 	}
 
 	public void actionPerformed(ActionEvent e) {

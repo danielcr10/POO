@@ -51,6 +51,8 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 
 	Point kingInCheckPosition;
 
+	MainWindow parent;
+
 	static {
 		try {
 			boardFrameImage = ImageIO.read(new File(imagesPath + File.separator + "board.png"));
@@ -60,7 +62,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		}
 	}
 
-	public BoardView(ChessController controller) {
+	public BoardView(MainWindow parent, ChessController controller) {
 		setSize(boardFrameImage.getWidth(null), boardFrameImage.getHeight(null));
 		addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -107,6 +109,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 			}
 		});
 		piecesImages = readPiecesImages();
+		this.parent = parent;
 		this.controller = controller;
 		this.pieces = controller.getBoard();
 		chooser = new PromotionChooser(this, controller);
@@ -252,7 +255,7 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 				else if(status == "STALEMATE") {
 					JOptionPane.showMessageDialog(this, "Empate!");
 				}
-				repaint();
+				parent.showInitialView();
 			}
 			else {
 				kingInCheckPosition = null;
