@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.File;
+import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
@@ -27,6 +28,10 @@ public class ChessController {
 		
 	public ChessController(Match chessMatch) {
 		this.chessMatch = chessMatch;
+	}
+
+	public void addModelListener(PropertyChangeListener listener) {
+		chessMatch.addPropertyChangeListener(listener);
 	}
 
 	public String[][] getBoard() {
@@ -67,7 +72,7 @@ public class ChessController {
 
 	public void saveGame() {
 		try {
-			FileOutputStream fos = new FileOutputStream("matches"+File.separator+"save.txt");
+			FileOutputStream fos = new FileOutputStream("matches" + File.separator + "save.txt");
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(chessMatch);
 			oos.close();
@@ -80,9 +85,9 @@ public class ChessController {
 		}
 	}
 
-	public void continueGame() {
+	public void continueGame(String path) {
 		try {
-			FileInputStream file = new FileInputStream("matches"+File.separator+"save.txt");
+			FileInputStream file = new FileInputStream(path);
 			ObjectInputStream object = new ObjectInputStream(file);
 			chessMatch = (Match) object.readObject();
 			object.close();

@@ -33,7 +33,7 @@ public class Match implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private final transient PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+	private transient PropertyChangeSupport pcs;
 
 	private Board matchBoard = new Board();
 
@@ -186,7 +186,10 @@ public class Match implements Serializable {
 	}
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		this.pcs.addPropertyChangeListener(listener);
+		if(pcs == null) {
+			pcs = new PropertyChangeSupport(this);
+		}
+		pcs.addPropertyChangeListener(listener);
 	}
 
 	private Piece createPieceFromString(String pieceName, Color color) {

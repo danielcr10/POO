@@ -112,6 +112,10 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 		chooser = new PromotionChooser(this, controller);
 	}
 
+	public void refreshBoard() {
+		this.pieces = controller.getBoard();
+	}
+
 	private boolean positionHasPiece(Point p) {
 		final String noPiece = "";
 		return pieces[p.y][p.x] != noPiece;
