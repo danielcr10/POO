@@ -34,10 +34,6 @@ public class MainWindow implements ActionListener {
 		frame.setVisible(true);
 	}
 
-	public BoardView getBoardView() {
-		return boardView;
-	}
-
 	public void showInitialView() {
 		final JPanel cards = (JPanel)frame.getContentPane();
 		final CardLayout layout = (CardLayout)cards.getLayout();
@@ -47,6 +43,9 @@ public class MainWindow implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == "New Game") {
+			controller.startNewMatch();
+			controller.addModelListener(boardView);
+			boardView.loadBoard();
 			final JPanel cards = (JPanel)frame.getContentPane();
 			final CardLayout layout = (CardLayout)cards.getLayout();
 			layout.next(cards);
@@ -61,7 +60,7 @@ public class MainWindow implements ActionListener {
 				String fileDir = file.getSelectedFile().getAbsolutePath();
 				controller.continueGame(fileDir);
 				controller.addModelListener(boardView);
-				boardView.refreshBoard();
+				boardView.loadBoard();
 				final JPanel cards = (JPanel)frame.getContentPane();
 				final CardLayout layout = (CardLayout)cards.getLayout();
 				layout.next(cards);

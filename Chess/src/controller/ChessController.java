@@ -25,8 +25,8 @@ public class ChessController {
 
 	private Match chessMatch;
 		
-	public ChessController(Match chessMatch) {
-		this.chessMatch = chessMatch;
+	public void startNewMatch() {
+		chessMatch = new Match();
 	}
 
 	public void addModelListener(PropertyChangeListener listener) {
