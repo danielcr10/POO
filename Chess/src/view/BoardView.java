@@ -114,14 +114,17 @@ public class BoardView extends JPanel implements PropertyChangeListener {
 				}
 			}
 		});
-		piecesImages = readPiecesImages();
+		this.piecesImages = readPiecesImages();
 		this.parent = parent;
 		this.controller = controller;
-		this.pieces = controller.getBoard();
-		chooser = new PromotionChooser(this, controller);
+		this.chooser = new PromotionChooser(this, controller);
 	}
 
-	public void refreshBoard() {
+	public void loadBoard() {
+		this.clickedSquare = null;
+		this.targetPositions = null;
+		this.promotionPosition = null;
+		this.kingInCheckPosition = null;
 		this.pieces = controller.getBoard();
 	}
 
