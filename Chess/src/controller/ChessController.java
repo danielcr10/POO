@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.File;
+import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("serial")
 class PlayerPermissionException extends Exception {
@@ -27,6 +28,10 @@ public class ChessController {
 		
 	public ChessController(Match chessMatch) {
 		this.chessMatch = chessMatch;
+	}
+
+	public void addModelListener(PropertyChangeListener listener) {
+		chessMatch.addPropertyChangeListener(listener);
 	}
 
 	public String[][] getBoard() {

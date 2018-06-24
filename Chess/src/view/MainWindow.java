@@ -54,6 +54,7 @@ public class MainWindow implements ActionListener {
 			file.showOpenDialog(null);
 			String fileDir = file.getSelectedFile().getAbsolutePath();
 			controller.continueGame(fileDir);
+			controller.addModelListener(boardView);
 			boardView.refreshBoard();
 			final JPanel cards = (JPanel)frame.getContentPane();
 			final CardLayout layout = (CardLayout)cards.getLayout();
