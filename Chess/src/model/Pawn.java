@@ -5,7 +5,9 @@ import java.util.ArrayList;
 
 public class Pawn extends KingdomProtector {
 
-	private static final Class[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
+	private static final Class<?>[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
+
+	private static final long serialVersionUID = 1L;
 
 	private boolean moved = false;
 
@@ -121,7 +123,7 @@ public class Pawn extends KingdomProtector {
 
 	public static String[] getPromotionPossibilities() {
 		final ArrayList<String> possibilities = new ArrayList<String>();
-		for(Class c : canPromoteTo) {
+		for(Class<?> c : canPromoteTo) {
 			possibilities.add(c.getSimpleName());
 		}
 
