@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.Point;
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 class Board implements Serializable {
 
 	static public final int dimension = 8;
@@ -12,8 +13,6 @@ class Board implements Serializable {
 	private Piece[][] board = new Piece[dimension][dimension];
 
 	private HashMap<Color, PieceSet> pieceSet = new HashMap<Color, PieceSet>();
-
-	private static final long serialVersionUID = 1L;
 
 	public Board() {
 		final PieceSet blackPieces = new PieceSet(this, Color.BLACK);

@@ -3,11 +3,10 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Pawn extends KingdomProtector {
 
 	private static final Class<?>[] canPromoteTo = {Rook.class, Knight.class, Bishop.class, Queen.class};
-
-	private static final long serialVersionUID = 1L;
 
 	private boolean moved = false;
 

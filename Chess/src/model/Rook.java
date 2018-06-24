@@ -3,9 +3,8 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 class Rook extends KingdomProtector {
-
-	private static final long serialVersionUID = 1L;
 
 	private boolean moved = false;
 	

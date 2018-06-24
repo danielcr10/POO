@@ -3,9 +3,8 @@ package model;
 import java.awt.Point;
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 class Knight extends KingdomProtector {
-
-	private static final long serialVersionUID = 1L;
 
 	public Knight(Board board, Color color) {
 		super(board, color);

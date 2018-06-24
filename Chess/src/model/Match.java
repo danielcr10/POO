@@ -28,9 +28,8 @@ enum Status {
 	PLAYING, CHECK, CHECKMATE, STALEMATE;
 }
 
+@SuppressWarnings("serial")
 public class Match implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
 
 	private transient PropertyChangeSupport pcs;
 
