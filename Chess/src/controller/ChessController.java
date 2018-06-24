@@ -23,8 +23,19 @@ class PlayerPermissionException extends Exception {
 
 public class ChessController {
 
+	private static ChessController controller;
+
 	private Match chessMatch;
-		
+
+	private ChessController() {};
+
+	public static ChessController getInstance() {
+		if(controller == null) {
+			controller = new ChessController();
+		}
+
+		return controller;
+	}
 	public void startNewMatch() {
 		chessMatch = new Match();
 	}

@@ -12,7 +12,7 @@ class Chess implements Runnable {
 	}
 	
 	public void run() {
-		final ChessController controller = new ChessController();
+		final ChessController controller = ChessController.getInstance();
 		final MainWindow mainWindow = new MainWindow(controller);
 	}
 }
