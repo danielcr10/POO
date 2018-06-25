@@ -39,6 +39,8 @@ public class Match implements Serializable {
 	private Color currentPlayer = Color.WHITE;
 
 	private Status status = Status.PLAYING;
+	
+	//private boolean game = false;
 
 	public void movePieceFromTo(Point from, Point to) {
 		try {
@@ -191,6 +193,14 @@ public class Match implements Serializable {
 		pcs.addPropertyChangeListener(listener);
 	}
 
+	//public void setGame() {
+	//	game = true;
+	//}
+
+	//public boolean getGame() {
+	//	return game;
+	//}
+	
 	private Piece createPieceFromString(String pieceName, Color color) {
 		Piece piece = null;
 		if(pieceName.contains("Rook")) {

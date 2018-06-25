@@ -51,6 +51,7 @@ public class MainWindow implements ActionListener {
 			final CardLayout layout = (CardLayout)cards.getLayout();
 			layout.next(cards);
 			adjustSize(boardView);
+			//controller.setGame();
 		}
 		else {
 			File dir = new File("matches");

@@ -89,6 +89,7 @@ public class ChessController {
 			FileInputStream file = new FileInputStream(path);
 			ObjectInputStream object = new ObjectInputStream(file);
 			chessMatch = (Match) object.readObject();
+			System.out.println(chessMatch);
 			object.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -99,6 +100,9 @@ public class ChessController {
 		}
 	}
 
+	//public void setGame() {
+	//	chessMatch.setGame();
+	//}
 	public String requestMatchStatus() {
 		return chessMatch.getMatchStatus();
 	}
