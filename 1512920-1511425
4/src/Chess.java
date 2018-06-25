@@ -1,6 +1,5 @@
 import javax.swing.SwingUtilities;
 
-import model.Match;
 import view.MainWindow;
 import controller.ChessController;
 
